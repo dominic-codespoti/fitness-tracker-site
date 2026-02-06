@@ -1,0 +1,26 @@
+---
+// Emits JSON-LD Article schema using frontmatter props
+const { frontmatter = {}, url = Astro.url } = Astro.props;
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": frontmatter?.canonical || String(url)
+  },
+  "headline": frontmatter?.title || undefined,
+  "image": frontmatter?.image ? [frontmatter.image] : undefined,
+  "datePublished": frontmatter?.publishDate || undefined,
+  "dateModified": frontmatter?.updatedDate || frontmatter?.publishDate || undefined,
+  "author": {
+    "@type": "Person",
+    "name": frontmatter?.author || "Workout Quest"
+  },
+  "description": frontmatter?.metaDescription || frontmatter?.excerpt || undefined
+};
+---
+{frontmatter && (
+  <script type="application/ld+json" is:inline>
+    {JSON.stringify(article)}
+  </script>
+)}

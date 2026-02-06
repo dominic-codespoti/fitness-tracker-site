@@ -1,11 +1,20 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import ArticleSchema from '~/components/common/ArticleSchema.astro';
+import FAQSchema from '~/components/common/FAQSchema.astro';
 
 import type { MetaData } from '~/types';
 
 export interface Props {
   frontmatter: {
-    title?: string
+    title?: string,
+    excerpt?: string,
+    image?: string,
+    imageAlt?: string,
+    canonical?: string,
+    publishDate?: string,
+    tags?: string[],
+    faqs?: { question: string, answer: string }[]
   }
 }
 
@@ -13,10 +22,21 @@ const { frontmatter } = Astro.props;
 
 const metadata: MetaData = {
   title: frontmatter?.title,
+  description: frontmatter?.excerpt,
+  canonical: frontmatter?.canonical,
+  openGraph: {
+    images: frontmatter?.image ? [frontmatter.image] : []
+  },
+  twitter: {
+    image: frontmatter?.image
+  }
 };
 ---
 
 <Layout metadata={metadata}>
+  <ArticleSchema frontmatter={frontmatter} />
+  {frontmatter?.faqs ? <FAQSchema faqs={frontmatter.faqs} /> : null}
+
   <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
     <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">{frontmatter.title}</h1>
     <div
