@@ -1,0 +1,20 @@
+---
+const { faqs = [] } = Astro.props;
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+---
+{faqs && faqs.length > 0 && (
+  <script type="application/ld+json" is:inline>
+    {JSON.stringify(faqSchema)}
+  </script>
+)}
