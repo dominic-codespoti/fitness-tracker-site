@@ -201,19 +201,27 @@ const metadata = {
     // Hero video swap: reveal video when it can play through first frame to avoid layout jank
     (function(){
       const vid = document.getElementById('hero-video');
-      const poster = document.getElementById('hero-poster');
+      const webmSource = document.getElementById('hero-source-webm');
       if(!vid) return;
+
+      // Swap to mobile-optimized source on small screens before the video loads
+      try{
+        if(window.innerWidth && window.innerWidth <= 640 && webmSource){
+          webmSource.setAttribute('src','/landing-small.webm');
+          // reload sources so browser picks up the new src
+          vid.load();
+        }
+      }catch(e){/* ignore */}
 
       // Try to autoplay: muted + playsinline increases chance
       function revealVideo(){
-        // fade in video, hide poster
+        // fade in video
         vid.style.opacity = '1';
-        poster.style.opacity = '0';
         // enable pointer events if needed
         vid.style.pointerEvents = 'auto';
       }
 
-      // If the video can play, reveal it. Use canplaythrough or loadeddata fallback.
+      // If the video can play, reveal it. Use canplay or loadeddata fallback.
       const onCanPlay = () => {
         // Attempt to play (some browsers require a user gesture, but muted helps)
         vid.play().catch(()=>{/* autoplay blocked; leave poster visible but keep muted playback for user start */});
@@ -223,16 +231,14 @@ const metadata = {
       vid.addEventListener('canplay', onCanPlay, {once:true});
       vid.addEventListener('loadeddata', onCanPlay, {once:true});
 
-      // Fallback timeout: if video hasn't fired within 2s, reveal poster (keep poster) to avoid blank
+      // Fallback timeout: if video hasn't fired within 2s, keep poster visible
       setTimeout(()=>{
         if(getComputedStyle(vid).opacity === '0'){
-          // keep poster visible but try to show low-opacity video to reduce jank when it arrives
-          poster.style.opacity = '1';
+          // keep poster visible by leaving video hidden
+          vid.style.opacity = '0';
         }
       }, 2000);
 
-      // Optional: pause video on small devices to save data but keep poster; user wanted video on mobile though
-      // We'll keep video but it will only load metadata until canplay.
     })();
   </script>
 </Layout>
