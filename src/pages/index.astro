@@ -32,7 +32,6 @@ const metadata = {
       <video id="hero-video" class="w-full h-full object-cover transition-opacity duration-700 opacity-0 pointer-events-none relative" playsinline muted preload="none" poster="/assets/hero-poster.webp" loop>
         <!-- small device first for bandwidth saving; sources will be added lazily via JS to avoid early downloads -->
         <source id="hero-source-webm" data-src="/landing.webm" type="video/webm">
-        <source id="hero-source-mp4" data-src="/landing.mp4" type="video/mp4">
         <!-- Fallback for very old browsers -->
         <img src="/assets/hero-poster.webp" alt="Hero background poster" />
       </video>
