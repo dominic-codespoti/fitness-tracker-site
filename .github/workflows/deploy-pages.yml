@@ -39,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: .vercel/output/static
 
       - name: Deploy to Pages
         uses: actions/deploy-pages@v2
