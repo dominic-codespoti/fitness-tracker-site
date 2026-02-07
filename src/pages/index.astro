@@ -26,7 +26,10 @@ const metadata = {
   <section class="relative bg-black h-screen">
     <!-- Simplified hero placeholder to avoid build-time transform issues -->
     <div class="absolute inset-0 w-full h-full">
-      <video id="hero-video" class="w-full h-full object-cover transition-opacity duration-700 opacity-0 pointer-events-none" playsinline muted preload="metadata" poster="/assets/hero-poster.webp" loop>
+      <!-- Ensure the poster image is painted early and counted as LCP: high-priority image. Video will overlay it when ready. -->
+      <img id="hero-lcp" src="/assets/hero-poster.webp" fetchpriority="high" decoding="async" class="w-full h-full object-cover absolute inset-0" alt="Hero background poster" aria-hidden="true" />
+
+      <video id="hero-video" class="w-full h-full object-cover transition-opacity duration-700 opacity-0 pointer-events-none relative" playsinline muted preload="metadata" poster="/assets/hero-poster.webp" loop>
         <!-- small device first for bandwidth saving; we'll swap via JS before loading on small screens -->
         <source id="hero-source-webm" src="/landing.webm" type="video/webm">
         <source src="/landing.mp4" type="video/mp4">
