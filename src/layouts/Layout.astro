@@ -37,6 +37,9 @@ const { language, textDirection } = I18N;
     <!-- Analytics temporarily disabled for Lighthouse run to avoid blocking hangs -->
     <!-- <Analytics /> -->
 
+    <!-- Preload hero poster to improve LCP -->
+    <link rel="preload" as="image" href="/assets/hero-poster.webp" importance="high">
+
     <!-- Uncomment line below to activate View Transitions -->
     <!-- <ViewTransitions fallback="swap" /> -->
   </head>
