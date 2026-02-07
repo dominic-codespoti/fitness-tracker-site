@@ -24,41 +24,19 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <section class="relative bg-black h-screen">
-    <!-- Background Video with fast first paint (LQIP poster + swap to video when ready) -->
-    <!-- Inline SVG LQIP used as immediate poster (data URI) -->
-    <div id="hero-media" class="absolute inset-0 w-full h-full">
-      <!-- instant paint placeholder (SVG gradient) -->
-      <img id="hero-poster" class="absolute inset-0 w-full h-full object-cover" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='%230f172a'/><stop offset='1' stop-color='%23000'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)' /></svg>" alt="Hero background" aria-hidden="true" />
-
-      <!-- actual video (kept muted + autoplay). Initially hidden until it can play to avoid late paint jank -->
-      <video id="hero-video" muted playsinline loop preload="metadata" class="absolute inset-0 object-cover w-full h-full opacity-0 transition-opacity duration-300 pointer-events-none" aria-hidden="true">
-        <source src="/landing.mp4" type="video/mp4" />
-      </video>
+    <!-- Simplified hero placeholder to avoid build-time transform issues -->
+    <div class="absolute inset-0 w-full h-full">
+      <img class="w-full h-full object-cover" src="/landing-poster.webp" alt="Hero background poster" />
     </div>
-  
-    <!-- Overlay Content -->
+
     <div class="relative z-10 flex items-center justify-center h-full">
       <div class="text-center text-white max-w-md mx-auto">
         <h1 class="text-5xl font-bold">Level Up Your Fitness Journey</h1>
         <p class="mt-4 text-lg">Track your workouts, level-up, and compete with friends for <strong>free</strong> in Workout Quest</p>
-  
-        <!-- App Store Buttons -->
+
         <div class="mt-8 flex justify-center space-x-4">
-          <a
-            href="https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-            target="_blank"
-            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2">
-            <span>Android Play Store</span>
-            <icon name="tabler:download"></icon>
-          </a>
-  
-          <a
-            href="https://apps.apple.com/au/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge"
-            target="_blank"
-            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2">
-            <span>iOS App Store</span>
-            <icon name="tabler:download"></icon>
-          </a>
+          <a href="https://play.google.com/store/apps/details?id=fitness.tracker" target="_blank" class="px-6 py-3 bg-primary rounded-lg text-white">Android Play Store</a>
+          <a href="https://apps.apple.com/au/app/workout-quest-fitness-tracker/id6452191825" target="_blank" class="px-6 py-3 bg-primary rounded-lg text-white">iOS App Store</a>
         </div>
       </div>
     </div>
