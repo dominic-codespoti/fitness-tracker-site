@@ -1,11 +1,6 @@
 ---
 import '@fontsource-variable/inter';
 
-/* Ensure fonts use font-display: swap to avoid blocking LCP */
-<style is:inline is:global>
-@font-face { font-family: 'Inter Variable'; font-display: swap; }
-</style>
-
 // 'DM Sans'
 // Nunito
 // Dosis
@@ -25,6 +20,9 @@ import '@fontsource-variable/inter';
 ---
 
 <style is:inline is:global>
+/* Ensure fonts use font-display: swap to avoid blocking LCP */
+@font-face { font-family: 'Inter Variable'; font-display: swap; }
+
   :root {
     --aw-font-sans: 'Inter Variable';
     --aw-font-serif: var(--aw-font-sans);
