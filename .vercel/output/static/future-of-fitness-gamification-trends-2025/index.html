@@ -196,10 +196,16 @@ const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=
 
       function appyHeaderStylesOnScroll() {
         const header = document.querySelector('#header[data-aw-sticky-header]');
+        const headerElem = document.getElementById('header');
+        // Defensive checks: some runs (headless tests) may not include the data attribute or the element yet.
+        if (!header || !headerElem) {
+          ticking = false;
+          return;
+        }
         if (lastKnownScrollPosition > 60 && !header.classList.contains('scroll')) {
-          document.getElementById('header').classList.add('scroll');
+          headerElem.classList.add('scroll');
         } else if (lastKnownScrollPosition <= 60 && header.classList.contains('scroll')) {
-          document.getElementById('header').classList.remove('scroll');
+          headerElem.classList.remove('scroll');
         }
         ticking = false;
       }
