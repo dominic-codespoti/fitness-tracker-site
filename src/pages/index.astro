@@ -205,11 +205,38 @@ const metadata = {
     (function(){
       const vid = document.getElementById('hero-video');
       const webmSource = document.getElementById('hero-source-webm');
+      const mp4Source = document.getElementById('hero-source-mp4');
       if(!vid) return;
 
-      // Swap to mobile-optimized source on small screens before the video loads
+      // Lazy-load video sources off the critical path.
+      function attachSources(){
+        try{
+          // If already attached, noop
+          if(webmSource && webmSource.getAttribute('src')) return;
+
+          // Prefer a smaller webm on small screens
+          if(window.innerWidth && window.innerWidth <= 640 && webmSource){
+            webmSource.setAttribute('src', webmSource.getAttribute('data-src').replace('/landing.webm','/landing-small.webm'));
+          }else{
+            if(webmSource) webmSource.setAttribute('src', webmSource.getAttribute('data-src'));
+            if(mp4Source) mp4Source.setAttribute('src', mp4Source.getAttribute('data-src'));
+          }
+
+          // Tell the browser to reload the media now that sources are present
+          vid.load();
+        }catch(e){/* ignore attach errors */}
+      }
+
+      // Use requestIdleCallback to attach sources when browser is idle, with a timeout fallback.
+      if('requestIdleCallback' in window){
+        requestIdleCallback(attachSources, {timeout: 500});
+      }else{
+        setTimeout(attachSources, 300);
+      }
+
+      // Swap to mobile-optimized source on very small screens if we didn't already set it above
       try{
-        if(window.innerWidth && window.innerWidth <= 640 && webmSource){
+        if(window.innerWidth && window.innerWidth <= 640 && webmSource && !webmSource.getAttribute('src')){
           webmSource.setAttribute('src','/landing-small.webm');
           // reload sources so browser picks up the new src
           vid.load();
