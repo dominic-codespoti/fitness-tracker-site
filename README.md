@@ -3,6 +3,7 @@
 The front-end is a React Native project and has recently been close sourced, unfortunately. The rest of the readme
 content comes from that repository.
 
+
 Workout Quest is the ultimate workout companion that provides all the guidance and assistance you need to meet your
 fitness goals. Whether you're a fitness enthusiast or just getting started on your fitness journey, this comprehensive
 fitness app built with React Native and TypeScript is here to help you achieve success!
