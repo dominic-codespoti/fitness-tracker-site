@@ -216,4 +216,42 @@ const metadata = {
       Don't just work out, embark on a quest! Transform your workouts into a thrilling journey with Workout Quest, the gamified workout tracker.
     </Fragment>
   </CallToAction>
+  <script>
+    // Hero video swap: reveal video when it can play through first frame to avoid layout jank
+    (function(){
+      const vid = document.getElementById('hero-video');
+      const poster = document.getElementById('hero-poster');
+      if(!vid) return;
+
+      // Try to autoplay: muted + playsinline increases chance
+      function revealVideo(){
+        // fade in video, hide poster
+        vid.style.opacity = '1';
+        poster.style.opacity = '0';
+        // enable pointer events if needed
+        vid.style.pointerEvents = 'auto';
+      }
+
+      // If the video can play, reveal it. Use canplaythrough or loadeddata fallback.
+      const onCanPlay = () => {
+        // Attempt to play (some browsers require a user gesture, but muted helps)
+        vid.play().catch(()=>{/* autoplay blocked; leave poster visible but keep muted playback for user start */});
+        revealVideo();
+      };
+
+      vid.addEventListener('canplay', onCanPlay, {once:true});
+      vid.addEventListener('loadeddata', onCanPlay, {once:true});
+
+      // Fallback timeout: if video hasn't fired within 2s, reveal poster (keep poster) to avoid blank
+      setTimeout(()=>{
+        if(getComputedStyle(vid).opacity === '0'){
+          // keep poster visible but try to show low-opacity video to reduce jank when it arrives
+          poster.style.opacity = '1';
+        }
+      }, 2000);
+
+      // Optional: pause video on small devices to save data but keep poster; user wanted video on mobile though
+      // We'll keep video but it will only load metadata until canplay.
+    })();
+  </script>
 </Layout>
