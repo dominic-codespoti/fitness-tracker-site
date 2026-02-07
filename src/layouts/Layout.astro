@@ -40,6 +40,9 @@ const { language, textDirection } = I18N;
     <!-- Preload hero poster to improve LCP -->
     <link rel="preload" as="image" href="/assets/hero-poster.webp" importance="high">
 
+    <!-- Preload primary Inter variable font to reduce FOIT -->
+    <link rel="preload" href="/_astro/inter-latin-wght-normal.f052ee44.woff2" as="font" type="font/woff2" crossorigin>
+
     <!-- Uncomment line below to activate View Transitions -->
     <!-- <ViewTransitions fallback="swap" /> -->
   </head>

@@ -29,10 +29,10 @@ const metadata = {
       <!-- Ensure the poster image is painted early and counted as LCP: high-priority image. Video will overlay it when ready. -->
       <img id="hero-lcp" src="/assets/hero-poster.webp" fetchpriority="high" decoding="async" class="w-full h-full object-cover absolute inset-0" alt="Hero background poster" aria-hidden="true" />
 
-      <video id="hero-video" class="w-full h-full object-cover transition-opacity duration-700 opacity-0 pointer-events-none relative" playsinline muted preload="metadata" poster="/assets/hero-poster.webp" loop>
-        <!-- small device first for bandwidth saving; we'll swap via JS before loading on small screens -->
-        <source id="hero-source-webm" src="/landing.webm" type="video/webm">
-        <source src="/landing.mp4" type="video/mp4">
+      <video id="hero-video" class="w-full h-full object-cover transition-opacity duration-700 opacity-0 pointer-events-none relative" playsinline muted preload="none" poster="/assets/hero-poster.webp" loop>
+        <!-- small device first for bandwidth saving; sources will be added lazily via JS to avoid early downloads -->
+        <source id="hero-source-webm" data-src="/landing.webm" type="video/webm">
+        <source id="hero-source-mp4" data-src="/landing.mp4" type="video/mp4">
         <!-- Fallback for very old browsers -->
         <img src="/assets/hero-poster.webp" alt="Hero background poster" />
       </video>
