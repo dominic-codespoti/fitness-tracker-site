@@ -1,0 +1,32 @@
+Morning Digest — 2026-02-13
+
+Sources: Hacker News (top5), GitHub Trending (top5), OzBargain, Reddit r/technology, TechCrunch
+
+TECH — Hacker News (top5)
+1. Resizing windows on macOS Tahoe – the saga continues — https://noheger.at
+   Users share long-standing frustrations and workarounds for window resizing regressions in macOS Tahoe; discussion covers utilities and Apple's UX decisions.
+2. Skip the Tips: A game to select "No Tip" but dark patterns try to stop you — https://skipthe.tips
+   Article and demo exploring how UI dark patterns nudge users toward tipping; shows design tricks and suggestions to resist them.
+3. GPT‑5.3‑Codex‑Spark (openai.com) — https://openai.com
+   OpenAI publish/update around GPT-5.3/Codex family; community comments on capabilities and implications for developers.
+4. New Nick Bostrom Paper: Optimal Timing for Superintelligence [pdf] — https://nickbostrom.com
+   Bostrom's latest analysis considers timing strategies for transformative AI and policy implications for global coordination.
+5. Gemini 3 Deep Think (blog.google) — https://blog.google
+   Google posts about deep-reasoning capabilities in Gemini 3 and use cases; sparks debate on evaluation and deployment.
+
+GITHUB TRENDING (top5)
+- tambo-ai/tambo — https://github.com/tambo-ai/tambo
+- danielmiessler/Personal_AI_Infrastructure — https://github.com/danielmiessler/Personal_AI_Infrastructure
+- google/langextract — https://github.com/google/langextract
+- ChromeDevTools/chrome-devtools-mcp — https://github.com/ChromeDevTools/chrome-devtools-mcp
+- microsoft/PowerToys — https://github.com/microsoft/PowerToys
+
+SALES — OzBargain highlights
+- Pokémon TCG Mini Tins $16.99 @ ALDI Special Buys — https://www.ozbargain.com.au/
+- [PC, Mac, Steam] Balatro $17.56 @ Steam — https://www.ozbargain.com.au/
+
+ADDITIONAL (from Reddit/TechCrunch)
+- TechCrunch: Build Mode podcast episode on GTM strategies for AI era — https://techcrunch.com/
+- Reddit r/technology: active discussions on Ring/Flock Safety, AWS nested virtualization, major payment processor email issues.
+
+End of full digest.
