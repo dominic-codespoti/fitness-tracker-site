@@ -3,7 +3,5 @@
     "env": {
       "NODE_VERSION": "24.x"
     }
-  },
-  "functions": {},
-  "routes": []
+  }
 }
