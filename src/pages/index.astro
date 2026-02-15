@@ -7,53 +7,203 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 
+import { getPermalink } from '~/utils/permalinks';
+
 const metadata = {
   title: 'Workout Quest: Gamified Workout Tracker App',
   ignoreTitleTemplate: true,
-  description: 'Track your exercises, earn achievements and level up as you train, at home or at the gym, with Workout Quest. Download the app for free on iOS and Android!',
+  description:
+    'Track your exercises, earn achievements and level up as you train, at home or at the gym, with Workout Quest. Download the app for free on iOS and Android!',
   robots: {
     index: true,
     follow: true,
   },
   canonical: 'https://www.workoutquestapp.com/',
 };
+
+const faqItems = [
+  {
+    title: 'How does Workout Quest work?',
+    description:
+      'Workout Quest gamifies your fitness and exercise experience by letting you track workouts through a massive exercise database, logging reps, sets, and weights, and rewarding XP, achievements, and insights as you train.',
+    icon: 'tabler:info-circle',
+  },
+  {
+    title: 'What makes Workout Quest unique in tracking workouts?',
+    description:
+      'Workout Quest mixes AI-driven personalization, an extensive workout library, and a community layer that turns routine exercise into an engaging, motivational adventure with detailed analytics.',
+    icon: 'tabler:star',
+  },
+  {
+    title: 'Can Workout Quest help me create a personalized fitness plan?',
+    description:
+      'The premium tier uses AI to craft workout plans tailored to your fitness level, goals, and available equipment, so every session feels purposeful and on-track.',
+    icon: 'tabler:adjustments',
+  },
+  {
+    title: 'How does the achievement system motivate Workout Quest users?',
+    description:
+      'Achievements, badges, and streaks celebrate every milestone, combining recognition with healthy competition inside the community so you keep showing up.',
+    icon: 'tabler:trophy',
+  },
+  {
+    title: 'Is Workout Quest suitable for beginners?',
+    description:
+      'With detailed GIF demonstrations, muscle-group filters, equipment tags, and helpful “hot” actions, beginners can explore workouts confidently before branching into more advanced routines.',
+    icon: 'tabler:user-plus',
+  },
+  {
+    title: 'How does Workout Quest support community and social features?',
+    description:
+      'Connect with friends, share achievements, and challenge each other in quests to build accountability through shared wins inside a welcoming fitness community.',
+    icon: 'tabler:users',
+  },
+];
+
+const blogHighlights = [
+  {
+    title: 'Gamification moves bodies faster',
+    description:
+      'Why leveling systems, quests, and rewards keep motivation high—plus how Workout Quest mirrors your real-world progress with XP, quests, and leaderboards.',
+    icon: 'tabler:help-hexagon',
+    callToAction: {
+      text: 'Read Level Up Your Fitness',
+      href: getPermalink('level-up-your-fitness', 'post'),
+      icon: 'tabler:arrow-right',
+      variant: 'link',
+    },
+  },
+  {
+    title: 'Where fitness tech is going next',
+    description:
+      'A theorycrafting dive into the trends shaping fit-tech, AI coaches, and gamified experiences for 2025.',
+    icon: 'tabler:radar',
+    callToAction: {
+      text: 'Read Trends for 2025',
+      href: getPermalink('future-of-fitness-gamification-trends-2025', 'post'),
+      icon: 'tabler:arrow-right',
+      variant: 'link',
+    },
+  },
+];
+
+const quickReads = [
+  {
+    title: 'Why gamified goals stick',
+    description:
+      'Level up Your Fitness walks through the psychology of EXP, quests, and social accountability so your training feels like a story-driven mission instead of a spreadsheet.',
+    href: getPermalink('level-up-your-fitness', 'post'),
+  },
+  {
+    title: 'Theorycrafting the future',
+    description:
+      'Future of Fitness Gamification Trends 2025 maps how AI, community quests, and exploratory features will keep the app one step ahead of the crowded tracker category.',
+    href: getPermalink('future-of-fitness-gamification-trends-2025', 'post'),
+  },
+  {
+    title: 'Questing for recovery',
+    description:
+      'See how recovery quests, programming-friendly deloads, and smart scheduling keep consistency high without burning anybody out.',
+    href: getPermalink('questing-for-recovery', 'post'),
+  },
+];
+
+const heroPoster = '/assets/images/ss-building.png';
+const canonicalUrl = metadata.canonical;
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: 'Workout Quest',
+  url: canonicalUrl,
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'iOS, Android',
+  description: metadata.description,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+  },
+  downloadUrl:
+    'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
+  screenshot: 'https://www.workoutquestapp.com/assets/images/ss-profile.png',
+  image: 'https://www.workoutquestapp.com/assets/images/default.png',
+  sameAs: [
+    'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
+    'https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.title,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.description,
+    },
+  })),
+};
 ---
 
 <Layout metadata={metadata}>
   <section class="relative bg-black h-screen">
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline class="absolute inset-0 object-cover w-full h-full opacity-40" id="hero-video">
-      <source src="/landing.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  
-    <!-- Overlay Content -->
+    <div class="absolute inset-0">
+      <div
+        class="absolute inset-0 bg-cover bg-center opacity-30 motion-reduce:block motion-safe:hidden"
+        style={`background-image:url('${heroPoster}')`}
+        aria-hidden="true"
+      />
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        loading="lazy"
+        poster={heroPoster}
+        class="absolute inset-0 w-full h-full object-cover opacity-40 motion-safe:block motion-reduce:hidden"
+        aria-hidden="true"
+      >
+        <source src="/landing.webm" type="video/webm" />
+        <source src="/landing.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
     <div class="relative z-10 flex items-center justify-center h-full">
       <div class="text-center text-white max-w-md mx-auto">
         <h1 class="text-5xl font-bold">Level Up Your Fitness Journey</h1>
-        <p class="mt-4 text-lg">Track your workouts, level-up, and compete with friends for <strong>free</strong> in Workout Quest</p>
-  
-        <!-- App Store Buttons -->
+        <p class="mt-4 text-lg">
+          Track your workouts, level-up, and compete with friends for <strong>free</strong> in Workout Quest
+        </p>
+
         <div class="mt-8 flex justify-center space-x-4">
           <a
             href="https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
             target="_blank"
-            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2">
+            rel="noopener noreferrer"
+            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2"
+          >
             <span>Android Play Store</span>
             <icon name="tabler:download"></icon>
           </a>
-  
+
           <a
             href="https://apps.apple.com/au/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge"
             target="_blank"
-            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2">
+            rel="noopener noreferrer"
+            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2"
+          >
             <span>iOS App Store</span>
             <icon name="tabler:download"></icon>
           </a>
         </div>
       </div>
     </div>
-  </section>  
+  </section>
 
   <Features
     id="features"
@@ -122,7 +272,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Empower Your Fitness Journey</h3>
-       Gamify your workouts with our unique blend of technology and community support. From home-based exercises to gym
+      Gamify your workouts with our unique blend of technology and community support. From home-based exercises to gym
       routines, our app guides you every step of the way.
     </Fragment>
 
@@ -140,43 +290,51 @@ const metadata = {
     ]}
   />
 
-  <FAQs
-    id="faqs"
-    tagline="FAQs"
-    title="Frequently Asked Questions"
-    items={[
-      {
-        title: 'How does Workout Quest work?',
-        description: 'Workout Quest gamifies your fitness and exercise experience by making it simple and fun to track your workouts: At it\'s core, it allows you to track your workout as you train (or schedule it ahead of time) by picking exercises from a large database and entering information about your reps, sets and weights. When completing workouts, you gain experience, level up, earn achievements and are provided with insights to help you stay on track.',
-        icon: 'tabler:info-circle',
-      },
-      {
-        title: 'What makes Workout Quest unique in tracking workouts?',
-        description: 'Unlike traditional fitness apps, Workout Quest introduces a gamified approach to keeping fit. With features like AI-powered personalization, an extensive workout library, and a community-driven platform, it transforms routine exercises into a more engaging and motivating experience. By tracking your progress, you unlock achievements, level up, and visualize your fitness journey with comprehensive progress analysis, making every workout session an adventure.',
-        icon: 'tabler:star',
-      },
-      {
-        title: 'Can Workout Quest help me create a personalized fitness plan?',
-        description: 'Absolutely! Workout Quest premium leverages AI to offer personalized workout plans tailored to your fitness level, goals, and available equipment. By analyzing your performance data and preferences, it suggests workouts that are most effective for you, ensuring you\'re on the right path whether you\'re engaging in home workouts or hitting the gym. This smart customization helps in achieving better results by adapting to your evolving fitness needs.',
-        icon: 'tabler:adjustments',
-      },
-      {
-        title: 'How does the achievement system motivate Workout Quest users?',
-        description: 'Workout Quest’s achievement system is designed to boost motivation by recognizing your hard work and progress, providing gamification to an otherwise potentially tedious activity. As you complete workouts, hit new personal records, and stick to your fitness regimen, you earn achievements, badges, and levels. This rewarding system not only celebrates your milestones but also encourages a healthy competition and accountability within the Workout Quest community, making fitness more fun and engaging.',
-        icon: 'tabler:trophy',
-      },
-      {
-        title: 'Is Workout Quest suitable for beginners?',
-        description: 'Yes, Workout Quest is perfectly suited for beginners as well as seasoned fitness enthusiasts. With its extensive database of exercises complete with GIF demonstrations, beginners can easily find and learn new workouts. Additionally, you can filter the list of exercises by muscle-group and equipment required to focus on what you personally need. From yoga, to abs, to strength training, to cardio, and more! Certain exercises are also tagged as "hot" if they are used by a majority of users, so you can easily find popular exercises to get started with.',
-        icon: 'tabler:user-plus',
-      },
-      {
-        title: 'How does Workout Quest support community and social features?',
-        description: 'Workout Quest goes beyond just tracking workouts by offering a rich community and social experience. You can connect with friends, share your progress, and challenge each other in fitness quests. The app promotes a supportive and motivational environment where users can celebrate achievements together, compare progress, and even participate in community challenges. This social connectivity makes working out more enjoyable and keeps you motivated through shared experiences.',
-        icon: 'tabler:users',
-      }
-    ]}
-  />
+  <section class="bg-slate-50 dark:bg-slate-900">
+    <div class="max-w-5xl mx-auto px-6 py-12">
+      <div class="text-center">
+        <p class="text-sm font-semibold uppercase tracking-wider text-primary">Deep dives</p>
+        <h2 class="mt-3 text-3xl font-bold text-black dark:text-white">Anchor your journey in the logbook</h2>
+        <p class="mt-2 text-lg text-muted dark:text-slate-300">
+          Dive into the thinking that powers Workout Quest: why quests keep motivation high, where the product is headed, and how
+          recovery rituals keep every quest sustainable.
+        </p>
+      </div>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {quickReads.map((link) => (
+          <a
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left transition hover:border-primary dark:border-slate-700 dark:bg-slate-800"
+            href={link.href}
+          >
+            <h3 class="text-xl font-semibold text-black dark:text-white group-hover:text-primary">{link.title}</h3>
+            <p class="mt-2 text-sm text-muted dark:text-slate-300">{link.description}</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-primary">Read article →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Content
+    id="insights"
+    tagline="Notes from the lab"
+    title="Theorycrafting the Gamified Training Loop"
+    image={{
+      src: '~/assets/images/ss-profile.png',
+      alt: 'Workout Quest insight dashboard preview',
+    }}
+    items={blogHighlights}
+    columns={2}
+  >
+    <Fragment slot="content">
+      <p class="text-lg text-muted dark:text-slate-300">
+        We double-click on the articles powering Workout Quest to share why gamification works, the metrics we chase, and the upcoming
+        features that will keep every quest fresh.
+      </p>
+    </Fragment>
+  </Content>
+
+  <FAQs id="faqs" tagline="FAQs" title="Frequently Asked Questions" items={faqItems} columns={2} />
 
   <CallToAction
     actions={[
@@ -201,7 +359,15 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="subtitle">
-      Don't just work out, embark on a quest! Transform your workouts into a thrilling journey with Workout Quest, the gamified workout tracker.
+      Don't just work out, embark on a quest! Transform your workouts into a thrilling journey with Workout Quest, the gamified
+      workout tracker.
     </Fragment>
   </CallToAction>
+
+  <script type="application/ld+json">
+    {JSON.stringify(softwareSchema)}
+  </script>
+  <script type="application/ld+json">
+    {JSON.stringify(faqSchema)}
+  </script>
 </Layout>
