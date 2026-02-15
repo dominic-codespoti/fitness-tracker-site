@@ -157,6 +157,8 @@ const faqSchema = {
         aria-hidden="true"
       />
       <video
+        id="hero-video"
+        data-high-quality-src="/landing.mp4"
         autoplay
         muted
         loop
@@ -369,5 +371,31 @@ const faqSchema = {
   </script>
   <script type="application/ld+json">
     {JSON.stringify(faqSchema)}
+  </script>
+  <script type="module">
+    if (typeof window !== 'undefined') {
+      const heroVideo = document.getElementById('hero-video');
+      const highQualitySrc = heroVideo?.dataset?.highQualitySrc;
+
+      if (heroVideo && highQualitySrc) {
+        const preloader = document.createElement('video');
+        preloader.src = highQualitySrc;
+        preloader.preload = 'auto';
+        preloader.muted = true;
+
+        const swapHeroSource = () => {
+          const currentTime = heroVideo.currentTime;
+          const mp4Source = heroVideo.querySelector('source[type="video/mp4"]');
+
+          if (mp4Source) {
+            mp4Source.src = highQualitySrc;
+          }
+          heroVideo.load();
+          heroVideo.currentTime = currentTime;
+        };
+
+        preloader.addEventListener('canplaythrough', swapHeroSource, { once: true });
+      }
+    }
   </script>
 </Layout>
