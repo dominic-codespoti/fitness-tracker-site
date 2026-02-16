@@ -7,7 +7,7 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 
-import { getPermalink } from '~/utils/permalinks';
+import { getPermalink, BLOG_BASE } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Workout Quest: Gamified Workout Tracker App',
@@ -66,9 +66,9 @@ const blogHighlights = [
     description:
       'Why leveling systems, quests, and rewards keep motivation high—plus how Workout Quest mirrors your real-world progress with XP, quests, and leaderboards.',
     icon: 'tabler:help-hexagon',
-    callToAction: {
+      callToAction: {
       text: 'Read Level Up Your Fitness',
-      href: getPermalink('level-up-your-fitness', 'post'),
+      href: getPermalink(`${BLOG_BASE}/future-of-fitness-gamification-trends-2025`, 'post'),
       icon: 'tabler:arrow-right',
       variant: 'link',
     },
@@ -92,7 +92,7 @@ const quickReads = [
     title: 'Why gamified goals stick',
     description:
       'Level up Your Fitness walks through the psychology of EXP, quests, and social accountability so your training feels like a story-driven mission instead of a spreadsheet.',
-    href: getPermalink('level-up-your-fitness', 'post'),
+    href: getPermalink(`${BLOG_BASE}/future-of-fitness-gamification-trends-2025`, 'post'),
   },
   {
     title: 'Theorycrafting the future',
@@ -104,7 +104,7 @@ const quickReads = [
     title: 'Questing for recovery',
     description:
       'See how recovery quests, programming-friendly deloads, and smart scheduling keep consistency high without burning anybody out.',
-    href: getPermalink('questing-for-recovery', 'post'),
+    href: getPermalink(`${BLOG_BASE}/questing-for-recovery`, 'post'),
   },
 ];
 
@@ -159,18 +159,14 @@ const faqSchema = {
       <video
         id="hero-video"
         data-high-quality-src="/landing.mp4"
-        autoplay
         muted
         loop
         playsinline
-        preload="metadata"
-        loading="lazy"
+        preload="none"
         poster={heroPoster}
         class="absolute inset-0 w-full h-full object-cover opacity-40 motion-safe:block motion-reduce:hidden"
         aria-hidden="true"
       >
-        <source src="/landing.webm" type="video/webm" />
-        <source src="/landing.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -377,24 +373,51 @@ const faqSchema = {
       const heroVideo = document.getElementById('hero-video');
       const highQualitySrc = heroVideo?.dataset?.highQualitySrc;
 
-      if (heroVideo && highQualitySrc) {
-        const preloader = document.createElement('video');
-        preloader.src = highQualitySrc;
-        preloader.preload = 'auto';
-        preloader.muted = true;
+      if (heroVideo) {
+        const loadVideoSources = () => {
+          // Add video sources after page is interactive
+          const webmSource = document.createElement('source');
+          webmSource.src = '/landing.webm';
+          webmSource.type = 'video/webm';
+          heroVideo.appendChild(webmSource);
 
-        const swapHeroSource = () => {
-          const currentTime = heroVideo.currentTime;
-          const mp4Source = heroVideo.querySelector('source[type="video/mp4"]');
+          const mp4Source = document.createElement('source');
+          mp4Source.src = '/landing.mp4';
+          mp4Source.type = 'video/mp4';
+          heroVideo.appendChild(mp4Source);
 
-          if (mp4Source) {
-            mp4Source.src = highQualitySrc;
+          // Enable autoplay and play
+          heroVideo.autoplay = true;
+          heroVideo.play().catch(() => {
+            console.log('Video autoplay unavailable');
+          });
+
+          // Later, swap to HD if available (low priority)
+          if (highQualitySrc) {
+            const swapToHighQuality = () => {
+              if (mp4Source && mp4Source.src !== highQualitySrc) {
+                const currentTime = heroVideo.currentTime;
+                mp4Source.src = highQualitySrc;
+                heroVideo.load();
+                heroVideo.currentTime = currentTime;
+              }
+            };
+
+            // Use requestIdleCallback if available, otherwise wait 3 seconds
+            if ('requestIdleCallback' in window) {
+              requestIdleCallback(() => swapToHighQuality());
+            } else {
+              setTimeout(swapToHighQuality, 3000);
+            }
           }
-          heroVideo.load();
-          heroVideo.currentTime = currentTime;
         };
 
-        preloader.addEventListener('canplaythrough', swapHeroSource, { once: true });
+        // Load video after page becomes interactive
+        if (document.readyState === 'loading') {
+          window.addEventListener('load', loadVideoSources, { once: true });
+        } else {
+          loadVideoSources();
+        }
       }
     }
   </script>
