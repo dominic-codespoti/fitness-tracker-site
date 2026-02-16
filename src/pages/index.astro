@@ -7,7 +7,7 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 
-import { getPermalink, BLOG_BASE } from '~/utils/permalinks';
+import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Workout Quest: Gamified Workout Tracker App',
@@ -68,7 +68,7 @@ const blogHighlights = [
     icon: 'tabler:help-hexagon',
       callToAction: {
       text: 'Read Level Up Your Fitness',
-      href: getPermalink(`${BLOG_BASE}/future-of-fitness-gamification-trends-2025`, 'post'),
+      href: getPermalink(`future-of-fitness-gamification-trends-2025`, 'post'),
       icon: 'tabler:arrow-right',
       variant: 'link',
     },
@@ -92,7 +92,7 @@ const quickReads = [
     title: 'Why gamified goals stick',
     description:
       'Level up Your Fitness walks through the psychology of EXP, quests, and social accountability so your training feels like a story-driven mission instead of a spreadsheet.',
-    href: getPermalink(`${BLOG_BASE}/future-of-fitness-gamification-trends-2025`, 'post'),
+    href: getPermalink(`future-of-fitness-gamification-trends-2025`, 'post'),
   },
   {
     title: 'Theorycrafting the future',
@@ -104,7 +104,7 @@ const quickReads = [
     title: 'Questing for recovery',
     description:
       'See how recovery quests, programming-friendly deloads, and smart scheduling keep consistency high without burning anybody out.',
-    href: getPermalink(`${BLOG_BASE}/questing-for-recovery`, 'post'),
+    href: getPermalink(`questing-for-recovery`, 'post'),
   },
 ];
 
