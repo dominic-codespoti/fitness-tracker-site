@@ -13,7 +13,7 @@ function writeFile(file, content) {
 }
 
 function parseFrontmatter(content) {
-  const m = content.match(/^---\n([\s\S]*?)\n---\n?/);
+  const m = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!m) return { front: null, body: content };
   const front = yaml.load(m[1]) || {};
   const body = content.slice(m[0].length);

@@ -16,7 +16,7 @@ function loadSiteUrl() {
 
 function readFrontmatter(file) {
   const content = fs.readFileSync(file, 'utf8');
-  const m = content.match(/^---\n([\s\S]*?)\n---/);
+  const m = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!m) return null;
   try {
     return yaml.load(m[1]);
