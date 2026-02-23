@@ -1165,7 +1165,7 @@ astring@^1.8.0:
 
 "astro-compress@github:astro-community/AstroCompress#no-sharp":
   version "2.2.15"
-  resolved "git+ssh://git@github.com/astro-community/AstroCompress.git#04082a23bdd41917632f747d1a316ed14e7dcdb9"
+  resolved "git+https://github.com/astro-community/AstroCompress.git#04082a23bdd41917632f747d1a316ed14e7dcdb9"
   dependencies:
     "@types/csso" "5.0.4"
     "@types/html-minifier-terser" "7.0.2"
