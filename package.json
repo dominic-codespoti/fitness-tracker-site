@@ -10,7 +10,12 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier -w .",
-    "lint:eslint": "eslint . --ext .js,.ts,.astro"
+    "lint:eslint": "eslint . --ext .js,.ts,.astro",
+    "validate-seo": "node scripts/validate-seo.js",
+    "check-canonicals": "node scripts/check-canonicals.js",
+    "regen-sitemap": "node scripts/generate-sitemap.js"
+    ,"audit-frontmatter": "node scripts/audit-frontmatter.js"
+    ,"generate-excerpts": "node scripts/generate-excerpts.js"
   },
   "dependencies": {
     "@astrojs/rss": "^3.0.0",
