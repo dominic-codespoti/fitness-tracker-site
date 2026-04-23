@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Workout Quest</title>
+  <desc id="desc">Workout Quest preview image</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" rx="24" ry="24" />
+  <circle cx="170" cy="140" r="72" fill="#2563eb" opacity="0.22" />
+  <circle cx="1030" cy="500" r="120" fill="#7c3aed" opacity="0.16" />
+  <text x="120" y="250" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="700">
+    Workout Quest
+  </text>
+  <text x="120" y="330" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="34">
+    Gamified workout tracking, recovery, and fitness progress.
+  </text>
+</svg>

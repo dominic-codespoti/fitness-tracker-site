@@ -71,6 +71,14 @@ export const adaptOpenGraphImages = async (
           };
         }
 
+        if (image.url.startsWith('/')) {
+          return {
+            url: String(new URL(image.url, astroSite)),
+            width: image?.width || defaultWidth,
+            height: image?.height || defaultHeight,
+          };
+        }
+
         const resolvedImage = (await findImage(image.url)) as ImageMetadata | undefined;
         if (!resolvedImage) {
           return null;
