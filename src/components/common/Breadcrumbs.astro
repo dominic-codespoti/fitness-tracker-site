@@ -1,0 +1,36 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface BreadcrumbItem {
+  name: string;
+  href?: string;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items = [], class: className = '' } = Astro.props;
+---
+
+{
+  items.length > 1 && (
+    <nav aria-label="Breadcrumb" class={`mb-6 text-sm text-muted dark:text-slate-400 ${className}`.trim()}>
+      <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+        {items.map((item, index) => (
+          <li class="flex items-center gap-2">
+            {index > 0 && <Icon name="tabler:chevron-right" class="h-4 w-4 text-gray-400 dark:text-slate-500" />}
+            {item.href ? (
+              <a href={item.href} class="hover:text-primary dark:hover:text-blue-300 transition-colors">
+                {item.name}
+              </a>
+            ) : (
+              <span class="font-medium text-default dark:text-slate-200">{item.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}

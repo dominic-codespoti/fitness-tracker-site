@@ -5,8 +5,11 @@ import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
 import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
+import Breadcrumbs from '~/components/common/Breadcrumbs.astro';
 
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
+import { buildBreadcrumbSchema } from '~/utils/seo';
+import { getCanonical, getHomePermalink, getBlogPermalink } from '~/utils/permalinks';
 
 export const prerender = true;
 
@@ -24,8 +27,14 @@ const currentPage = page.currentPage ?? 1;
 // const allTags = await findTags(['HIIT', 'Yoga', 'Weightlifting']);
 
 const metadata = {
-  title: `Blog${currentPage > 1 ? ` Page ${currentPage}` : ''}`,
-  description: 'Explore our latest news, workout tips, nutrition advice, and success stories',
+  title:
+    currentPage > 1
+      ? `Workout Quest Blog Archive — Page ${currentPage}`
+      : 'Workout Quest Blog: Fitness, Recovery, and Training Guides',
+  description:
+    currentPage > 1
+      ? `Browse page ${currentPage} of the Workout Quest blog archive for fitness, recovery, wearable, and training articles.`
+      : 'Explore Workout Quest articles on gamified fitness, recovery, wearables, motivation, and practical training systems.',
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -34,12 +43,24 @@ const metadata = {
     type: 'blog',
   },
 };
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', item: String(getCanonical(getHomePermalink())) },
+  { name: 'Blog', item: String(getCanonical(getBlogPermalink())) },
+]);
+
+const breadcrumbItems = [
+  { name: 'Home', href: getHomePermalink() },
+  { name: 'Blog' },
+];
 ---
 
 <Layout metadata={metadata}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+    <Breadcrumbs items={breadcrumbItems} />
     <Headline
-      subtitle="Explore our latest news, workout tips, nutrition advice, and success stories"
+      subtitle="Deep dives into fitness systems, gamification, recovery, wearables, and practical training ideas from the Workout Quest team."
     >
       Workout Quest Blog
     </Headline>

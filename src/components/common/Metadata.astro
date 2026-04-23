@@ -17,12 +17,14 @@ export interface Props extends MetaData {
 const {
   title,
   ignoreTitleTemplate = false,
-  canonical = String(getCanonical(String(Astro.url.pathname))),
+  canonical: rawCanonical,
   robots = {},
   description,
   openGraph = {},
   twitter = {},
 } = Astro.props;
+
+const canonical = rawCanonical === null ? undefined : rawCanonical || String(getCanonical(String(Astro.url.pathname)));
 
 const seoProps: AstroSeoProps = merge(
   {
@@ -59,7 +61,7 @@ const seoProps: AstroSeoProps = merge(
     noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
     nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
     description: description,
-    openGraph: { url: canonical, ...openGraph },
+    openGraph: { ...(canonical ? { url: canonical } : {}), ...openGraph },
     twitter: twitter,
   }
 );

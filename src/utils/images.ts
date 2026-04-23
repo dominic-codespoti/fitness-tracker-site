@@ -60,14 +60,12 @@ export const adaptOpenGraphImages = async (
   const defaultWidth = 1200;
   const defaultHeight = 626;
 
-  const adaptedImages = await Promise.all(
+  const adaptedImages = (await Promise.all(
     images.map(async (image) => {
       if (image?.url) {
         const resolvedImage = (await findImage(image.url)) as ImageMetadata | undefined;
         if (!resolvedImage) {
-          return {
-            url: '',
-          };
+          return null;
         }
 
         const _image = await getImage({
@@ -84,16 +82,12 @@ export const adaptOpenGraphImages = async (
             height: typeof _image.height === 'number' ? _image.height : undefined,
           };
         }
-        return {
-          url: '',
-        };
+        return null;
       }
 
-      return {
-        url: '',
-      };
+      return null;
     })
-  );
+  )).filter((image): image is NonNullable<typeof image> => Boolean(image?.url));
 
-  return { ...openGraph, ...(adaptedImages ? { images: adaptedImages } : {}) };
+  return { ...openGraph, ...(adaptedImages.length ? { images: adaptedImages } : {}) };
 };

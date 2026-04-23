@@ -48,7 +48,7 @@ export interface MetaData {
   title?: string;
   ignoreTitleTemplate?: boolean;
 
-  canonical?: string;
+  canonical?: string | null;
 
   robots?: MetaDataRobots;
 

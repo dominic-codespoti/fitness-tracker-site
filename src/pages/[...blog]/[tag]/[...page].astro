@@ -6,6 +6,9 @@ import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
 import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
+import Breadcrumbs from '~/components/common/Breadcrumbs.astro';
+import { getCanonical, getHomePermalink, getBlogPermalink, getPermalink } from '~/utils/permalinks';
+import { buildBreadcrumbSchema } from '~/utils/seo';
 
 export const prerender = true;
 
@@ -18,20 +21,37 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { page, tag } = Astro.props as Props;
 
 const currentPage = page.currentPage ?? 1;
+const tagName = tag.replaceAll('-', ' ');
 
 const metadata = {
-  title: `Posts by tag '${tag}'${currentPage > 1 ? ` — Page ${currentPage} ` : ''}`,
-  description: `Posts by tag '${tag}'${currentPage > 1 ? ` — Page ${currentPage} ` : ''}`,
+  title: `Workout Quest articles tagged '${tag}'${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  description: `Browse Workout Quest articles tagged '${tag}'${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   robots: {
-    index: blogTagRobots?.index,
+    index: false,
     follow: blogTagRobots?.follow,
   },
 };
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', item: String(getCanonical(getHomePermalink())) },
+  { name: 'Blog', item: String(getCanonical(getBlogPermalink())) },
+  { name: tagName, item: String(getCanonical(getPermalink(tag, 'tag'))) },
+]);
+
+const breadcrumbItems = [
+  { name: 'Home', href: getHomePermalink() },
+  { name: 'Blog', href: getBlogPermalink() },
+  { name: tagName },
+];
 ---
 
 <Layout metadata={metadata}>
   <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline>Tag: {tag}</Headline>
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+    <Breadcrumbs items={breadcrumbItems} />
+    <Headline subtitle="Tag archives stay available for readers and internal linking, but are intentionally excluded from search indexing.">
+      Tag: {tagName}
+    </Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
   </section>

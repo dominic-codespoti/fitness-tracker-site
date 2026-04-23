@@ -16,13 +16,11 @@ metadata:
   openGraph:
     site_name: Workout Quest
     images:
-      - url: '~/assets/images/default.png'
+      - url: '~/assets/images/ss-profile.png'
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@onwidget'
-    site: '@onwidget'
     cardType: summary_large_image
 
 i18n:
