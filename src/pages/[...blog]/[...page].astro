@@ -27,6 +27,7 @@ const currentPage = page.currentPage ?? 1;
 // const allTags = await findTags(['HIIT', 'Yoga', 'Weightlifting']);
 
 const metadata = {
+  ignoreTitleTemplate: true,
   title:
     currentPage > 1
       ? `Workout Quest Blog Archive — Page ${currentPage}`

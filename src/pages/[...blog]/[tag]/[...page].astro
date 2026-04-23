@@ -24,6 +24,7 @@ const currentPage = page.currentPage ?? 1;
 const tagName = tag.replaceAll('-', ' ');
 
 const metadata = {
+  ignoreTitleTemplate: true,
   title: `Workout Quest articles tagged '${tag}'${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   description: `Browse Workout Quest articles tagged '${tag}'${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   robots: {

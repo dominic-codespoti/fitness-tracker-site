@@ -45,6 +45,7 @@ const categoryContent = {
 };
 
 const metadata = {
+  ignoreTitleTemplate: true,
   title: `${categoryContent.title}${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   description: currentPage > 1 ? `${categoryContent.description} Page ${currentPage}.` : categoryContent.description,
   robots: {
