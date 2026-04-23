@@ -48,6 +48,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     publishDate: rawPublishDate = new Date(),
     updateDate: rawUpdateDate,
     title,
+    description,
     excerpt,
     image,
     tags: rawTags = [],
@@ -62,6 +63,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
   const category = rawCategory ? cleanSlug(rawCategory) : undefined;
   const tags = rawTags.map((tag: string) => cleanSlug(tag));
+  const summary = excerpt ?? description;
 
   return {
     id: id,
@@ -72,7 +74,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     updateDate: updateDate,
 
     title: title,
-    excerpt: excerpt,
+    excerpt: summary,
     image: image,
 
     category: category,
