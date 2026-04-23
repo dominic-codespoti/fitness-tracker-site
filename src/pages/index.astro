@@ -1,4 +1,6 @@
 ---
+import profileScreenshot from '~/assets/images/ss-profile.png';
+
 import Layout from '~/layouts/PageLayout.astro';
 
 import Features from '~/components/widgets/Features.astro';
@@ -110,6 +112,7 @@ const quickReads = [
 
 const heroPoster = '/assets/images/ss-building.png';
 const canonicalUrl = metadata.canonical;
+const profileScreenshotUrl = new URL(profileScreenshot.src, Astro.site).toString();
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'MobileApplication',
@@ -126,8 +129,8 @@ const softwareSchema = {
   },
   downloadUrl:
     'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
-  screenshot: 'https://www.workoutquestapp.com/assets/images/ss-profile.png',
-  image: 'https://www.workoutquestapp.com/assets/images/default.png',
+  screenshot: profileScreenshotUrl,
+  image: profileScreenshotUrl,
   sameAs: [
     'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
     'https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',

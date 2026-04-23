@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import PostTags from '~/components/blog/Tags.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
+import profileScreenshot from '~/assets/images/ss-profile.png';
 
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
@@ -20,11 +21,12 @@ const { Content } = post;
 const canonicalUrl = typeof url === 'string' ? url : url?.toString() ?? '';
 const bannerImage =
   typeof post.image === 'string' ? post.image : post.image && typeof post.image === 'object' ? post.image.src : undefined;
-const articleImage = bannerImage || 'https://www.workoutquestapp.com/assets/images/default.png';
+const fallbackImage = new URL(profileScreenshot.src, Astro.site).toString();
+const articleImage = bannerImage || fallbackImage;
 const publishedAt = post.publishDate.toISOString();
 const modifiedAt = (post.updateDate || post.publishDate).toISOString();
 const keywords = post.tags?.length ? post.tags.join(', ') : undefined;
-const publisherLogo = 'https://www.workoutquestapp.com/assets/images/default.png';
+const publisherLogo = fallbackImage;
 const articleJson = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -41,7 +43,7 @@ const articleJson = {
   },
   publisher: {
     '@type': 'Organization',
-    name: 'Workout Quest',
+    name: 'DJ Applications',
     logo: {
       '@type': 'ImageObject',
       url: publisherLogo,
