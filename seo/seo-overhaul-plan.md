@@ -46,6 +46,8 @@ Status: **executed and verified 2026-08-07** — `yarn build` clean (108 pages),
 ## 2. Phase 1 — Content restructuring (weeks 2-3; the traffic engine)
 
 Status: **executed and verified 2026-08-07** — 33 posts → 27 posts (+5 new, -11 merged/deleted), 103 pages built; build + hardened validate-seo + check-canonicals + audit-frontmatter all pass.
+- **Lighthouse (live, 2026-08-07, LH 13.4.1)**: home Perf 97 / A11y 100 / BP 81 / SEO 100; post Perf 95 / A11y 100 / BP 81 / SEO 100; privacy Perf 100 / A11y 100 / SEO 100. Remaining BP flag is GA's Shared Storage/Attribution deprecation warnings (third-party). Performance work: hero video 14.7MB → 0.95MB (720p CRF30), lazy poster fixed (was a 404), favicon.ico added, dark-mode text-primary contrast override, console TypeError guarded.
+- **Final OpenSEO crawl (30528f9e)**: 15 issues — 14 intentional noindex (tags/pagination), 1 thin-content warning (archive page). Pre-overhaul baseline was 77.
 - §2a executed Option A: new evergreen canonical `/best-gamified-fitness-apps` (2,088 words, 12-app comparison table), 3 dated posts 301'd into it.
 - §2b executed: recovery hub `smart-recovery-quests-wearables` expanded 443 → 1,777 words; `balanced-wearable-leaderboards` → 1,264; 8 posts deleted and 301'd to keepers (incl. `micro-quests-for-active-recovery` → new `/active-recovery`).
 - §2c executed: all 5 routine posts retitled (Phase 0) + bodies reworked to split vocabulary, "who this split suits" paragraphs, series cross-links + link to `/upper-lower-split-guide`.
