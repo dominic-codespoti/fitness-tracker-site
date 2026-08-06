@@ -3,7 +3,7 @@
 ## Reality Check
 - This repo is an Astro 3 static marketing/content site for Workout Quest. The `README.md` is describing the React Native product being marketed, not this repository's implementation details.
 - Trust `package.json`, `astro.config.mjs`, and `src/` for how this repo is built and run.
-- CI deploys GitHub Pages with `npm run build` on Node 20 (`.github/workflows/deploy.yml`), but the repo tracks `yarn.lock` and ignores `package-lock.json` / `pnpm-lock.yaml`. Prefer `yarn` locally unless you need to match CI exactly.
+- Production deploys via Vercel Git integration (project `workout-quest`, production branch `main`): pushing to `main` auto-deploys. Build runs `npm run build` (`astro build && node scripts/generate-sitemap.js`); Vercel uses `yarn.lock` when present. `vercel.json` holds the 301 redirects and cache headers.
 - Minimum supported Node version is `>=18.14.1` (`package.json`).
 
 ## Commands
