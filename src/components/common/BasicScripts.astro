@@ -107,10 +107,12 @@ import { UI } from '~/utils/config';
 
     function appyHeaderStylesOnScroll() {
       const header = document.querySelector('#header[data-aw-sticky-header]');
-      if (lastKnownScrollPosition > 60 && !header.classList.contains('scroll')) {
-        document.getElementById('header').classList.add('scroll');
-      } else if (lastKnownScrollPosition <= 60 && header.classList.contains('scroll')) {
-        document.getElementById('header').classList.remove('scroll');
+      if (header) {
+        if (lastKnownScrollPosition > 60 && !header.classList.contains('scroll')) {
+          document.getElementById('header').classList.add('scroll');
+        } else if (lastKnownScrollPosition <= 60 && header.classList.contains('scroll')) {
+          document.getElementById('header').classList.remove('scroll');
+        }
       }
       ticking = false;
     }
