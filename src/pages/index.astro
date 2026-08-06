@@ -1,5 +1,6 @@
 ---
 import profileScreenshot from '~/assets/images/ss-profile.png';
+import heroPosterImage from '~/assets/images/ss-building.png';
 
 import Layout from '~/layouts/PageLayout.astro';
 
@@ -110,7 +111,7 @@ const quickReads = [
   },
 ];
 
-const heroPoster = '/assets/images/ss-building.png';
+const heroPoster = heroPosterImage.src;
 const canonicalUrl = metadata.canonical;
 const profileScreenshotUrl = new URL(profileScreenshot.src, Astro.site).toString();
 const softwareSchema = {
