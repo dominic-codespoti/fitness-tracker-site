@@ -26,6 +26,10 @@ const {
 
 const canonical = rawCanonical === null ? undefined : rawCanonical || String(getCanonical(String(Astro.url.pathname)));
 
+const resolvedTitle = title || METADATA?.title?.default || '';
+const titleTemplate = !ignoreTitleTemplate ? METADATA?.title?.template : undefined;
+const finalTitle = titleTemplate && resolvedTitle ? titleTemplate.replace('%s', resolvedTitle) : resolvedTitle;
+
 const seoProps: AstroSeoProps = merge(
   {
     title: '',
@@ -61,7 +65,7 @@ const seoProps: AstroSeoProps = merge(
     noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
     nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
     description: description,
-    openGraph: { ...(canonical ? { url: canonical } : {}), ...openGraph },
+    openGraph: { ...(canonical ? { url: canonical } : {}), title: finalTitle, ...openGraph },
     twitter: twitter,
   }
 );

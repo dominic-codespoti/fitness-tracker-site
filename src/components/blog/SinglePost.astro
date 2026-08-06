@@ -2,10 +2,13 @@
 import { Icon } from 'astro-icon/components';
 
 import Image from '~/components/common/Image.astro';
+import AppCta from '~/components/blog/AppCta.astro';
 import PostTags from '~/components/blog/Tags.astro';
+import RelatedPosts from '~/components/blog/RelatedPosts.astro';
 import profileScreenshot from '~/assets/images/ss-profile.png';
 
 import { getPermalink } from '~/utils/permalinks';
+import { findRelatedPosts } from '~/utils/blog';
 import { getFormattedDate } from '~/utils/utils';
 
 import type { Post } from '~/types';
@@ -17,6 +20,7 @@ export interface Props {
 
 const { post, url } = Astro.props;
 const { Content } = post;
+const relatedPosts = await findRelatedPosts(post);
 const canonicalUrl = typeof url === 'string' ? url : url?.toString() ?? '';
 const bannerImage =
   typeof post.image === 'string' ? post.image : post.image && typeof post.image === 'object' ? post.image.src : undefined;
@@ -122,4 +126,6 @@ const articleJson = {
       <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
     </div>
   </article>
+  <AppCta />
+  <RelatedPosts posts={relatedPosts} currentTitle={post.title} />
 </section>

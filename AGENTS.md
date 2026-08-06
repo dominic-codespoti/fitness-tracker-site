@@ -43,3 +43,8 @@
 ## Style Constraints Worth Remembering
 - Formatting is Prettier with `singleQuote: true`, semicolons, and `printWidth: 120` (`.prettierrc.js`).
 - ESLint covers `.astro`, `.ts`, and `.js`; TypeScript unused args prefixed with `_` are intentionally ignored (`.eslintrc.js`).
+
+## OpenSEO (SEO Research)
+- OpenSEO MCP is configured in `.omp/mcp.json` (`openseo`, streamable HTTP at `https://app.openseo.so/mcp`). It requires OAuth: run `/mcp reload` then `/mcp reauth openseo` (or restart the session) and sign in once. Tools mount as `mcp__openseo_*` (e.g. `research_keywords`, `get_keyword_metrics`, `get_serp_results`, `list_projects`).
+- SEO workflow skills live in `.agents/skills/` (8 skills: `seo-project-setup`, `seo-coach`, `seo-audit`, `keyword-research`, `keyword-clustering`, `competitive-landscape`, `competitor-analysis`, `link-prospecting`). Read them via `skill://<name>`; they complement the local `yarn validate-seo` scripts, which only check built HTML.
+- Reinstall/update skills with `npx skills add every-app/open-seo -s '*' -a agents -y --copy` from the repo root.

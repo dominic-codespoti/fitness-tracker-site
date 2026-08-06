@@ -1,6 +1,19 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/top-gamified-fitness-apps-for-android-and-ios-in-2024", "destination": "/best-gamified-fitness-apps", "permanent": true },
+    { "source": "/top-gamified-fitness-apps-of-2025", "destination": "/best-gamified-fitness-apps", "permanent": true },
+    { "source": "/top-ai-fitness-apps-of-2024", "destination": "/best-gamified-fitness-apps", "permanent": true },
+    { "source": "/readiness-micro-quests", "destination": "/smart-recovery-quests-wearables", "permanent": true },
+    { "source": "/readiness-community-quests", "destination": "/smart-recovery-quests-wearables", "permanent": true },
+    { "source": "/ethical-recovery-quests", "destination": "/smart-recovery-quests-wearables", "permanent": true },
+    { "source": "/rest-rally-recharge-quest", "destination": "/smart-recovery-quests-wearables", "permanent": true },
+    { "source": "/smart-recovery-quests-2026", "destination": "/smart-recovery-quests-wearables", "permanent": true },
+    { "source": "/story-driven-streaks-habit-quests", "destination": "/smart-recovery-quests-wearables", "permanent": true },
+    { "source": "/micro-quests-for-active-recovery", "destination": "/active-recovery", "permanent": true },
+    { "source": "/inclusive-leaderboards-wearable-wellness", "destination": "/balanced-wearable-leaderboards", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/_astro/(.*)",

@@ -91,10 +91,10 @@ const blogHighlights = [
 
 const quickReads = [
   {
-    title: 'Why gamified goals stick',
+    title: 'Turn recovery into a quest',
     description:
-      'Story-driven streaks and habit quests keep motivation consistent by turning daily workouts into narrative progression that mirrors RPG leveling systems.',
-    href: getPermalink('story-driven-streaks-habit-quests', 'post'),
+      'Wearable readiness scores, sleep, and HRV turn rest days into data-driven quests that reward smart recovery alongside hard training.',
+    href: getPermalink('smart-recovery-quests-wearables', 'post'),
   },
   {
     title: 'Theorycrafting the future',
@@ -135,6 +135,22 @@ const softwareSchema = {
     'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
     'https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
   ],
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Workout Quest',
+  url: canonicalUrl,
+  logo: profileScreenshotUrl,
+  sameAs: softwareSchema.sameAs,
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Workout Quest',
+  url: canonicalUrl,
 };
 
 const faqSchema = {
@@ -367,6 +383,8 @@ const faqSchema = {
 
   <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)}></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
   <script type="module">
     if (typeof window !== 'undefined') {
       const heroVideo = document.getElementById('hero-video');

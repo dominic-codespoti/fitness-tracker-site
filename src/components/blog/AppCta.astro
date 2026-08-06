@@ -1,0 +1,30 @@
+---
+import Button from '~/components/ui/Button.astro';
+---
+
+<div class="mx-auto px-6 sm:px-6 max-w-3xl mt-12">
+  <div
+    class="rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800 p-6 sm:p-8 text-center shadow-sm"
+  >
+    <h2 class="text-2xl font-bold leading-tight font-heading dark:text-slate-300">Download Workout Quest</h2>
+    <p class="mt-2 text-muted dark:text-slate-400">
+      Free on iOS and Android with offline workout tracking — no subscription required.
+    </p>
+    <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+      <Button
+        variant="primary"
+        text="App Store"
+        href="https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825"
+        target="_blank"
+        icon="tabler:download"
+      />
+      <Button
+        variant="primary"
+        text="Google Play"
+        href="https://play.google.com/store/apps/details?id=fitness.tracker"
+        target="_blank"
+        icon="tabler:download"
+      />
+    </div>
+  </div>
+</div>

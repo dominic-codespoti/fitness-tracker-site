@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getPermalink } from '~/utils/permalinks';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 import Button from '~/components/ui/Button.astro';
 
 export interface Props {
@@ -16,6 +16,8 @@ const { prevUrl, nextUrl, prevText = 'Newer posts', nextText = 'Older posts' } =
 {
   (prevUrl || nextUrl) && (
     <div class="container flex">
+      {prevUrl && <link rel="prev" href={String(getCanonical(getPermalink(prevUrl)))} />}
+      {nextUrl && <link rel="next" href={String(getCanonical(getPermalink(nextUrl)))} />}
       <div class="flex flex-row mx-auto container justify-between">
         <Button
           variant="tertiary"

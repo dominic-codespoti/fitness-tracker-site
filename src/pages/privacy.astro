@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import { getCanonical } from '~/utils/permalinks';
 
 import Content from '~/components/widgets/Content.astro';
 
@@ -7,9 +8,18 @@ const metadata = {
   title: 'Privacy Policy',
   description: 'Your privacy is important to us at Workout Quest. Read our privacy policy to learn more about how we use your data.',
 };
+
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Workout Quest Privacy Policy',
+  url: String(getCanonical('/privacy')),
+  description: metadata.description,
+};
 ---
 
 <Layout metadata={metadata}>
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)}></script>
   <Content tagline="Privacy Policy" title="Your privacy is important to us.">
     <Fragment slot="content">
       <span class="ml-auto w-full text-center">

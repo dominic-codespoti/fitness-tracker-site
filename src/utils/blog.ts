@@ -165,6 +165,25 @@ export const findLatestPosts = async ({ count }: { count?: number }): Promise<Ar
 };
 
 /** */
+export const findRelatedPosts = async (post: Post, count: number = 3): Promise<Array<Post>> => {
+  const _count = count || 3;
+  const posts = await fetchPosts();
+
+  return posts
+    .filter((candidate) => candidate.id !== post.id)
+    .map((candidate) => ({
+      candidate,
+      score:
+        (candidate.category === post.category ? 1 : 0) +
+        (candidate.tags || []).filter((tag) => (post.tags || []).includes(tag)).length,
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score || b.candidate.publishDate.valueOf() - a.candidate.publishDate.valueOf())
+    .slice(0, _count)
+    .map(({ candidate }) => candidate);
+};
+
+/** */
 export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogListRouteEnabled) return [];
   return paginate(await fetchPosts(), {

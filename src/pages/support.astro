@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import { getCanonical } from '~/utils/permalinks';
 
 import Hero from '~/components/widgets/Hero.astro';
 import Features from '~/components/widgets/Features.astro';
@@ -11,9 +12,18 @@ const metadata = {
   title: 'Support',
   description: 'Get help with the Workout Quest app and other apps from DJ Applications',
 };
+
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Workout Quest Support',
+  url: String(getCanonical('/support')),
+  description: metadata.description,
+};
 ---
 
 <Layout metadata={metadata}>
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)}></script>
   <Content tagline="Support" title="Contact Our Support Team">
     <Fragment slot="content">
       <h1 class="text-4xl text-center font-bold mb-8">Contact Our Support Team</h1>

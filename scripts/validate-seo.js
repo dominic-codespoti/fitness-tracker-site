@@ -121,6 +121,23 @@ function normalizeRelativePath(file) {
     const isBlogPage = relativePath.startsWith('blog/');
     const hasArticleSchema = jsonLdBlocks.some((block) => block.includes('"@type":"Article"'));
     const requiresBreadcrumbs = isBlogPage || isCategoryPage || isTagPage || hasArticleSchema;
+    const titleTag = (content.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1]?.trim() || '';
+    const metaDescription = extractMeta(content, 'name', 'description') || '';
+
+    if (!is404 && !isNoindex) {
+      if (jsonLdBlocks.length === 0) {
+        console.error(`Missing JSON-LD on indexable page: ${file}`);
+        hadError = true;
+      }
+      if (titleTag.length > 60) {
+        console.error(`Title too long (${titleTag.length} chars) on indexable page: ${file}`);
+        hadError = true;
+      }
+      if (metaDescription && (metaDescription.length < 70 || metaDescription.length > 160)) {
+        console.error(`Description length ${metaDescription.length} (want 70-160) on indexable page: ${file}`);
+        hadError = true;
+      }
+    }
 
     if (!is404 && !isNoindex && !canonical) {
       console.error(`Missing canonical tag on indexable page: ${file}`);

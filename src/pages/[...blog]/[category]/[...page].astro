@@ -30,6 +30,8 @@ const categoryContent = {
       'Explore Workout Quest articles on gamified fitness, recovery, wearables, motivation, and training systems that make consistency easier to sustain.',
     subtitle:
       'A curated archive of Workout Quest stories on recovery, motivation, wearables, and long-term fitness consistency.',
+    intro:
+      'From gamified motivation and wearable-driven recovery to daily micro-habits, these guides break down how to stay consistent without relying on willpower alone. Each article pairs the psychology of habit-building with practical tracking tactics you can put into practice today.',
   },
   training: {
     title: 'Workout Quest Training Guides',
@@ -37,6 +39,8 @@ const categoryContent = {
       'Browse Workout Quest training articles covering workout structure, progressive overload, training frequency, and practical routines for different schedules.',
     subtitle:
       'A focused archive of Workout Quest training articles on programming, exercise structure, and workout design.',
+    intro:
+      'Practical, science-backed guidance on how to structure workouts, apply progressive overload, and choose a split that fits your schedule. Whether you train two days a week or six, these articles show how to organize volume, frequency, and recovery for steady progress.',
   },
 }[category] || {
   title: `Workout Quest ${categoryName} Articles`,
@@ -74,6 +78,9 @@ const breadcrumbItems = [
     <Headline subtitle={categoryContent.subtitle}>
       <span class="capitalize">{categoryName}</span>
     </Headline>
+    {categoryContent.intro && (
+      <p class="mt-2 mb-8 text-sm sm:text-base text-muted dark:text-slate-400 max-w-2xl">{categoryContent.intro}</p>
+    )}
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
   </section>
