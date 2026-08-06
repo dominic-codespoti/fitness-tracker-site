@@ -126,6 +126,25 @@ Status: **content + playbook executed 2026-08-07** — 2 comparison posts live (
 
 ## 4. Phase 3 — Measure & compound (weeks 6+, ongoing)
 
+Status: **operating loop defined 2026-08-07** — deploys are on Vercel Git integration; broken Pages CI removed; rank tracker config is a UI action in the OpenSEO app (no create tool is mounted).
+
+### Monthly operating loop (30-45 min, first week of each month)
+1. **GSC review** — `mcp__openseo_get_search_console_performance`, 28-day window, `dimensions: ["query","page"]`, rowLimit 100 + paginate. Compare vs baseline (206 clicks / 5.6k impressions / month, captured 2026-08-06). Watch: striking-distance terms (position 5-20 with impressions), the gamified family (moat defense), the split terms ("4 day workout split" etc. — should appear within 60-90 days of the 2026-08-07 retitle), and the new posts (upper-lower-split-guide, best-free-workout-apps, deload-week, active-recovery).
+2. **Rank tracker** — create one in the OpenSEO app (project a3b4b0be): two groups — (a) gamified moat: gamified fitness apps, gamified workout app, gamified fitness apps free, gamification fitness apps, best gamified fitness apps, gamified workout tracker; (b) split terms: 2/3/4/5/6 day workout split; (c) demand posts: upper lower split, best free workout app, deload week, active recovery. Read results monthly via `get_rank_tracker` (free).
+3. **Content batch** — 2 posts/month in the three pillars (splits/routines, recovery science, gamification & app comparisons), each cross-linked per the Phase 1 pattern. Refresh year-stamped assets before the next year.
+4. **Validator gate** — `yarn build && yarn validate-seo && yarn check-canonicals && yarn audit-frontmatter` on every content PR; the hardened validator now fails on long titles, out-of-band descriptions, and missing JSON-LD.
+5. **Quarterly competitor analysis** — 2 of {hevyapp.com, strong.app, jefit.com, habitica.com, muscleandstrength.com, aworkoutroutine.com} via `get_domain_overview` + `get_ranked_keywords`.
+
+### Credit budget (current: 33; top up ~500 for the quarter)
+- Monthly: 1 `research_keywords` (1-3 seeds, ~96-288) per content batch + 1 `get_keyword_metrics` hydration (~100) for the striking-distance list from step 1.
+- Quarterly: 2 competitor `get_domain_overview` (~100-300 each) + `get_backlinks_overview` (~50).
+- Queued one-offs: `get_serp_results` prospect batches for link-building (10 queries/call), `get_backlinks_profile` for the factchecktool.com audit (23-link domain).
+
+### Success metrics (from §5, with dates)
+- 2026-09-07 (30d): GSC clicks 206 → 350+; "gamified fitness apps" family position improvement from the canonical consolidation.
+- 2026-10-07 (60d): first split-term top 10; top-apps canonical ≤ pos 15.
+- 2027-02 (180d): clicks 3-5x; "best free workout app" top 10; referring domains 43 → 60+.
+
 - **Fix and extend the audit tooling**: validate-seo fails on missing JSON-LD; add a title-length check (>60) and description-length check (70-160) so regressions fail CI.
 - **Monthly cadence** (2 posts/month, always cross-linked into the three pillars): splits/routines, recovery science, gamification & app comparisons. Refresh the "2026" assets before 2027.
 - **OpenSEO usage** (33 credits remaining; top up for the next cycle):
