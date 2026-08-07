@@ -48,3 +48,6 @@
 - OpenSEO MCP is configured in `.omp/mcp.json` (`openseo`, streamable HTTP at `https://app.openseo.so/mcp`). It requires OAuth: run `/mcp reload` then `/mcp reauth openseo` (or restart the session) and sign in once. Tools mount as `mcp__openseo_*` (e.g. `research_keywords`, `get_keyword_metrics`, `get_serp_results`, `list_projects`).
 - SEO workflow skills live in `.agents/skills/` (8 skills: `seo-project-setup`, `seo-coach`, `seo-audit`, `keyword-research`, `keyword-clustering`, `competitive-landscape`, `competitor-analysis`, `link-prospecting`). Read them via `skill://<name>`; they complement the local `yarn validate-seo` scripts, which only check built HTML.
 - Reinstall/update skills with `npx skills add every-app/open-seo -s '*' -a agents -y --copy` from the repo root.
+
+## Content Agent
+- `.omp/agents/content-writer.md` defines the repo's reusable content-writing agent (frontmatter contract, heading rules, internal linking, fact verification, voice). Dispatch it via the task tool with `agent: "content-writer"` — it is rediscovered per spawn, so new definitions work without a restart. It will follow the same frontmatter bands the validator enforces (title ≤45 raw / rendered ≤60, excerpt 70-155).
