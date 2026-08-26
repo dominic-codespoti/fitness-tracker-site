@@ -13,9 +13,9 @@
     "lint:eslint": "eslint . --ext .js,.ts,.astro",
     "validate-seo": "node scripts/validate-seo.js",
     "check-canonicals": "node scripts/check-canonicals.js",
-    "regen-sitemap": "node scripts/generate-sitemap.js"
-    ,"audit-frontmatter": "node scripts/audit-frontmatter.js"
-    ,"generate-excerpts": "node scripts/generate-excerpts.js"
+    "regen-sitemap": "node scripts/generate-sitemap.js",
+    "audit-frontmatter": "node scripts/audit-frontmatter.js",
+    "generate-excerpts": "node scripts/generate-excerpts.js"
   },
   "dependencies": {
     "@astrojs/rss": "^3.0.0",
@@ -56,5 +56,6 @@
   },
   "engines": {
     "node": ">=18.14.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
