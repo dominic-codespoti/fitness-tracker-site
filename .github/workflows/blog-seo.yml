@@ -1,0 +1,28 @@
+# Blog SEO gate — validates every PR the same way `AGENTS.md` prescribes.
+name: blog-seo
+
+on:
+  pull_request:
+    paths:
+      - 'src/content/post/**'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'astro.config.mjs'
+      - 'vercel.json'
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: yarn validate-seo
+      - run: yarn check-canonicals
+      - run: yarn audit-frontmatter
