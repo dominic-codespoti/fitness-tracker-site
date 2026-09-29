@@ -12,6 +12,9 @@ on:
       - 'astro.config.mjs'
       - 'vercel.json'
 
+  # Manual runs (e.g. verifying the gate itself on a PR that touches no filtered paths).
+  workflow_dispatch:
+
 jobs:
   seo:
     runs-on: ubuntu-latest
