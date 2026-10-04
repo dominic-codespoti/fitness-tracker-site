@@ -1,5 +1,7 @@
 ---
-import Layout from '~/layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import Layout from '~/layouts/PageLayout.astro';
+import heroThumbs from '~/assets/images/hero-thumbs.png';
 import { getCanonical, getHomePermalink } from '~/utils/permalinks';
 
 const title = `Error 404`;
@@ -9,32 +11,22 @@ const metadata = {
   canonical: null,
   openGraph: {
     url: String(getCanonical('/404')),
-    images: [{ url: '/workout-quest-preview.svg', width: 1200, height: 630 }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 };
 ---
 
 <Layout metadata={metadata}>
-  <section class="flex items-center h-full p-16">
-    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-      <div class="max-w-md text-center">
-        <img
-          src="/workout-quest-preview.svg"
-          alt="Workout Quest preview"
-          width="1200"
-          height="630"
-          class="mx-auto mb-8 rounded-xl border border-slate-200 dark:border-slate-700"
-        />
-        <h2 class="mb-8 font-bold text-9xl">
-          <span class="sr-only">Error</span>
-          <span class="text-primary">404</span>
-        </h2>
-        <p class="text-3xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-        <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">
-          But dont worry, you can find plenty of other things on our homepage.
-        </p>
-        <a rel="noopener noreferrer" href={getHomePermalink()} class="btn ml-4">Back to homepage</a>
-      </div>
+  <section class="px-5 py-16">
+    <div class="mx-auto flex max-w-md flex-col items-center text-center">
+      <Image src={heroThumbs} alt="" widths={[220, 440]} sizes="220px" class="w-[220px]" loading="eager" />
+      <h1 class="comic-title mt-4 text-8xl">
+        <span class="sr-only">Error</span>
+        <span class="hl">404</span>
+      </h1>
+      <p class="mt-6 font-heading text-3xl font-black">This quest leads nowhere.</p>
+      <p class="mt-3 text-lg text-muted">We couldn't find this page, but there's plenty more on the homepage.</p>
+      <a href={getHomePermalink()} class="btn-primary mt-8">Back to homepage</a>
     </div>
   </section>
 </Layout>

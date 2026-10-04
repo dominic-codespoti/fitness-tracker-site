@@ -1,64 +1,53 @@
 ---
-import '@fontsource-variable/inter';
-
-// 'DM Sans'
-// Nunito
-// Dosis
-// Outfit
-// Roboto
-// Literata
-// 'IBM Plex Sans'
-// Karla
-// Poppins
-// 'Fira Sans'
-// 'Libre Franklin'
-// Inconsolata
-// Raleway
-// Oswald
-// 'Space Grotesk'
-// Urbanist
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/rubik';
 ---
 
+<!-- Brand tokens mirror the app's comicLight / comicDark themes (fitness-tracker src/themes.ts). -->
 <style is:inline is:global>
   :root {
-    --aw-font-sans: 'Inter Variable';
+    --aw-font-sans: 'Plus Jakarta Sans Variable';
     --aw-font-serif: var(--aw-font-sans);
-    --aw-font-heading: var(--aw-font-sans);
+    --aw-font-heading: 'Rubik Variable';
 
-    --aw-color-primary: rgb(30 64 175);
-    --aw-color-secondary: rgb(30 58 138);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: #1e5eff;
+    --aw-color-secondary: #1747c4;
+    --aw-color-accent: #ffc83d;
 
-    --aw-color-text-heading: rgb(0 0 0); 
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: #14163a;
+    --aw-color-text-default: #14163a;
+    --aw-color-text-muted: #4b4f6b;
+    --aw-color-bg-page: #f2f3f8;
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
+    --aw-color-bg-page-dark: #1f1b2e;
 
-    ::selection {background-color: lavender;}
+    --wq-ink: #14163a;
+    --wq-shadow: #14163a;
+    --wq-face: #ffffff;
+    --wq-track: #e6e8f2;
+    --wq-poster: #1e5eff;
+    --wq-band: #ffc83d;
 
+    ::selection {
+      background-color: #ffc83d;
+      color: #14163a;
+    }
   }
 
   .dark {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: var(--aw-font-sans);
-    --aw-font-heading: var(--aw-font-sans);
+    --aw-color-primary: #ffc83d;
+    --aw-color-secondary: #ffc83d;
 
-    --aw-color-primary: rgb(30 64 175);
-    --aw-color-secondary: rgb(30 58 138);
-    --aw-color-accent: rgb(109 40 217);
-
-    --aw-color-text-heading: rgb(0 0 0); 
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
+    --aw-color-text-heading: #ffffff;
+    --aw-color-text-default: #ffffff;
+    --aw-color-text-muted: #c9c2dd;
     --aw-color-bg-page: var(--aw-color-bg-page-dark);
 
-    .text-primary {
-      color: rgb(147 197 253);
-    }
-
-    ::selection {background-color: black; color: snow}
-
+    --wq-ink: #ede7ff;
+    --wq-shadow: #0e0b16;
+    --wq-face: #3a3448;
+    --wq-track: #2a2538;
+    --wq-poster: #1a1733;
+    --wq-band: #6c54b6;
   }
 </style>

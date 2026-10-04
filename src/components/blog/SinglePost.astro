@@ -5,7 +5,7 @@ import Image from '~/components/common/Image.astro';
 import AppCta from '~/components/blog/AppCta.astro';
 import PostTags from '~/components/blog/Tags.astro';
 import RelatedPosts from '~/components/blog/RelatedPosts.astro';
-import profileScreenshot from '~/assets/images/ss-profile.png';
+import appIcon from '~/assets/images/app-icon.png';
 
 import { getPermalink } from '~/utils/permalinks';
 import { findRelatedPosts } from '~/utils/blog';
@@ -24,12 +24,12 @@ const relatedPosts = await findRelatedPosts(post);
 const canonicalUrl = typeof url === 'string' ? url : url?.toString() ?? '';
 const bannerImage =
   typeof post.image === 'string' ? post.image : post.image && typeof post.image === 'object' ? post.image.src : undefined;
-const fallbackImage = new URL(profileScreenshot.src, Astro.site).toString();
+const fallbackImage = new URL('/og-image.png', Astro.site).toString();
 const articleImage = bannerImage || fallbackImage;
 const publishedAt = post.publishDate.toISOString();
 const modifiedAt = (post.updateDate || post.publishDate).toISOString();
 const keywords = post.tags?.length ? post.tags.join(', ') : undefined;
-const publisherLogo = fallbackImage;
+const publisherLogo = new URL(appIcon.src, Astro.site).toString();
 const articleJson = {
   '@context': 'https://schema.org',
   '@type': 'Article',

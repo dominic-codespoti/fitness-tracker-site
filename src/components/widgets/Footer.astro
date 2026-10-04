@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { SITE } from '~/utils/config';
+import Logo from '~/components/Logo.astro';
+import StoreBadges from '~/components/StoreBadges.astro';
 import { getHomePermalink } from '~/utils/permalinks';
 
 interface Link {
@@ -10,38 +11,51 @@ interface Link {
   icon?: string;
 }
 
-interface Links {
-  title?: string;
-  links: Array<Link>;
-}
-
 export interface Props {
-  links: Array<Links>;
-  secondaryLinks: Array<Link>;
+  links?: Array<Link>;
   socialLinks: Array<Link>;
   footNote?: string;
-  theme?: string;
 }
 
-const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
+const { socialLinks = [], links = [], footNote = '' } = Astro.props;
 ---
 
-<footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
-  <div class="container py-4 flex flex-col items-center justify-center w-full mx-auto space-y-4">
-    <div class="text-sm dark:text-slate-400 align-middle justify-center flex space-x-4">
-      <Fragment set:html={footNote} />
-      -
-      {socialLinks.map(({ href, ariaLabel, icon }) => (
-        <a
-          class="ml-1 inline-block text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200"
-          href={href}
-          aria-label={ariaLabel}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon class="w-5 h-5" name={icon} />
-        </a>
-      ))}
+<footer class="relative border-t-2 border-ink bg-face not-prose">
+  <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-10 md:flex-row md:justify-between md:px-6">
+    <div class="flex flex-col items-center gap-3 md:items-start">
+      <a href={getHomePermalink()} aria-label="Workout Quest home"><Logo /></a>
+      <nav aria-label="Footer navigation">
+        <ul class="flex flex-wrap justify-center gap-x-5 gap-y-1 text-sm font-bold">
+          {
+            links.map(({ text, href }) => (
+              <li>
+                <a class="hover:text-primary" href={href}>
+                  {text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    <div class="flex flex-col items-center gap-3 md:items-end">
+      <StoreBadges size="sm" />
+      <div class="flex items-center gap-3 text-sm text-muted">
+        <Fragment set:html={footNote} />
+        {
+          socialLinks.map(({ href, ariaLabel, icon }) => (
+            <a
+              class="text-muted hover:text-default"
+              href={href}
+              aria-label={ariaLabel}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon class="h-5 w-5" name={icon} />
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
 </footer>

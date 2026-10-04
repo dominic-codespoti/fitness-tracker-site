@@ -22,7 +22,6 @@ interface MenuLink extends Link {
 export interface Props {
   id?: string;
   links?: Array<MenuLink>;
-  isSticky?: boolean;
   isDark?: boolean;
   isFullWidth?: boolean;
   showToggleTheme?: boolean;
@@ -32,7 +31,6 @@ export interface Props {
 const {
   id = "header",
   links = [],
-  isSticky = false,
   isDark = false,
   isFullWidth = false,
   showToggleTheme = false,
@@ -44,12 +42,12 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`
 
 <header
   class:list={[
-    { sticky: false, relative: !isSticky, dark: isDark },
-    "absolute top-0 z-40 flex-none mx-auto w-full border-b border-gray-50/0 transition-[opacity] ease-linear",
+    { dark: isDark },
+    "sticky top-0 z-40 flex-none mx-auto w-full",
   ]}
   {...id ? { id } : {}}
 >
-  <div class="absolute inset-0"></div>
+  <div class="absolute inset-0 bg-page border-b-2 border-ink"></div>
   <div
     class:list={[
       "relative text-default py-2 px-2 md:px-6 mx-auto w-full md:flex ",
@@ -71,7 +69,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`
       aria-label="Main navigation"
     >
       <ul
-        class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-xl md:text-[0.9375rem] tracking-[0.01rem] font-medium"
+        class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-xl md:text-[0.9375rem] tracking-[0.01rem] font-bold"
       >
         {
           links.map(({ text, href, links }) => (

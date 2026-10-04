@@ -1,7 +1,18 @@
 ---
+import { Image } from 'astro:assets';
+import appIcon from '~/assets/images/app-icon.png';
 import { SITE } from '~/utils/config';
 ---
 
-<span class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
-  💪 {SITE?.name}
+<span class="flex items-center gap-2.5 self-center whitespace-nowrap">
+  <Image
+    src={appIcon}
+    alt=""
+    width={40}
+    height={40}
+    densities={[1, 2]}
+    loading="eager"
+    class="h-10 w-10 rounded-[11px] border-2 border-ink shadow-comic-sm"
+  />
+  <span class="font-heading text-xl font-black uppercase tracking-tight text-default">{SITE?.name}</span>
 </span>

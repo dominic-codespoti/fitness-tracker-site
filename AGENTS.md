@@ -44,6 +44,11 @@
 - Formatting is Prettier with `singleQuote: true`, semicolons, and `printWidth: 120` (`.prettierrc.js`).
 - ESLint covers `.astro`, `.ts`, and `.js`; TypeScript unused args prefixed with `_` are intentionally ignored (`.eslintrc.js`).
 
+## Brand
+- The site follows the app's comic design system (`fitness-tracker/src/components/comic/README.md`). Colour and font tokens live in `src/components/CustomStyles.astro` (light and dark values mirror the app's `comicLight`/`comicDark`); Tailwind exposes them as `ink`, `face`, `poster`, `band`, `highlight`, `navy` plus the hard `shadow-comic*` offsets. Shared pieces: `.btn*`, `.comic-card`, `.comic-title` (`src/assets/styles/tailwind.css`) and `StoreBadges.astro`.
+- Fonts: Plus Jakarta Sans (body) and Rubik (headings), as in the app.
+- Store art (screenshots, app captures, hero art, stickers, favicons, `public/og-image.png`) is exported from `~/projects/workout-quest/ui-audit-captures/store/site_assets.py`; rerun it after regenerating the store screenshots rather than editing the images by hand.
+
 ## OpenSEO (SEO Research)
 - OpenSEO MCP is configured in `.omp/mcp.json` (`openseo`, streamable HTTP at `https://app.openseo.so/mcp`). It requires OAuth: run `/mcp reload` then `/mcp reauth openseo` (or restart the session) and sign in once. Tools mount as `mcp__openseo_*` (e.g. `research_keywords`, `get_keyword_metrics`, `get_serp_results`, `list_projects`).
 - SEO workflow skills live in `.agents/skills/` (8 skills: `seo-project-setup`, `seo-coach`, `seo-audit`, `keyword-research`, `keyword-clustering`, `competitive-landscape`, `competitor-analysis`, `link-prospecting`). Read them via `skill://<name>`; they complement the local `yarn validate-seo` scripts, which only check built HTML.

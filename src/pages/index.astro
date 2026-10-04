@@ -1,16 +1,27 @@
 ---
-import profileScreenshot from '~/assets/images/ss-profile.png';
-import heroPosterImage from '~/assets/images/ss-building.png';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 
 import Layout from '~/layouts/PageLayout.astro';
+import StoreBadges from '~/components/StoreBadges.astro';
 
-import Features from '~/components/widgets/Features.astro';
-import Content from '~/components/widgets/Content.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
+import appIcon from '~/assets/images/app-icon.png';
+import heroArt from '~/assets/images/hero-art.jpg';
+import heroFlex from '~/assets/images/hero-flex.png';
+import heroThumbs from '~/assets/images/hero-thumbs.png';
+import profileCapture from '~/assets/images/app/profile-stats.jpg';
+import builderCapture from '~/assets/images/app/builder.jpg';
+import shotLevelUp from '~/assets/images/store/01-level-up.jpg';
+import shotQuests from '~/assets/images/store/02-quests.jpg';
+import shotLogging from '~/assets/images/store/03-logging.jpg';
+import shotLeaderboard from '~/assets/images/store/04-leaderboard.jpg';
+import shotCoach from '~/assets/images/store/05-ai-coach.jpg';
+import shotCollect from '~/assets/images/store/06-collect.jpg';
+import shotProgress from '~/assets/images/store/07-progress.jpg';
+import shotRoutines from '~/assets/images/store/08-routines.jpg';
 
 import { getPermalink } from '~/utils/permalinks';
+import { STORE_LINKS } from '~/utils/storeLinks';
 
 const metadata = {
   title: 'Workout Quest: Gamified Workout Tracker App',
@@ -24,96 +35,153 @@ const metadata = {
   canonical: 'https://www.workoutquestapp.com/',
 };
 
-const faqItems = [
+// Same order and wording as the App Store and Google Play screenshots.
+const screenshots = [
+  { src: shotLevelUp, alt: 'Level up every workout: every rep earns XP for your hero' },
+  { src: shotQuests, alt: 'Complete quests and earn loot: daily, weekly and monthly quests' },
+  { src: shotLogging, alt: 'Log sets in seconds with targets, timers and personal bests' },
+  { src: shotLeaderboard, alt: 'Race friends to number one on leaderboards for volume, steps and more' },
+  { src: shotCoach, alt: 'An AI coach in your pocket for swaps, plans and warm-ups' },
+  { src: shotCollect, alt: 'Collect heroes and gear: unlock avatars, pets and cards' },
+  { src: shotProgress, alt: 'Watch your strength climb with charts, streaks and rest tracking' },
+  { src: shotRoutines, alt: 'Ready-made routines and hundreds of exercises to build from' },
+];
+
+const features = [
   {
-    title: 'How does Workout Quest work?',
-    description:
-      'Workout Quest gamifies your fitness and exercise experience by letting you track workouts through a massive exercise database, logging reps, sets, and weights, and rewarding XP, achievements, and insights as you train.',
-    icon: 'tabler:info-circle',
+    title: 'Level up every workout',
+    description: 'Every set earns XP for your hero and levels up the muscles you trained.',
+    icon: 'tabler:bolt',
   },
   {
-    title: 'What makes Workout Quest unique in tracking workouts?',
-    description:
-      'Workout Quest mixes AI-driven personalization, an extensive workout library, and a community layer that turns routine exercise into an engaging, motivational adventure with detailed analytics.',
-    icon: 'tabler:star',
+    title: 'Complete quests, earn loot',
+    description: 'Daily, weekly and monthly quests reward you with coins, chests and collectible cards.',
+    icon: 'tabler:map-2',
   },
   {
-    title: 'Can Workout Quest help me create a personalized fitness plan?',
-    description:
-      'The premium tier uses AI to craft workout plans tailored to your fitness level, goals, and available equipment, so every session feels purposeful and on-track.',
-    icon: 'tabler:adjustments',
+    title: 'Log sets in seconds',
+    description: 'Targets from your last session, a rest timer and personal bests flagged as you lift.',
+    icon: 'tabler:barbell',
   },
   {
-    title: 'How does the achievement system motivate Workout Quest users?',
-    description:
-      'Achievements, badges, and streaks celebrate every milestone, combining recognition with healthy competition inside the community so you keep showing up.',
+    title: 'Race friends to #1',
+    description: 'Add friends, share workouts to the feed and climb the leaderboards together.',
     icon: 'tabler:trophy',
   },
   {
-    title: 'Is Workout Quest suitable for beginners?',
-    description:
-      'With detailed GIF demonstrations, muscle-group filters, equipment tags, and helpful “hot” actions, beginners can explore workouts confidently before branching into more advanced routines.',
-    icon: 'tabler:user-plus',
+    title: 'An AI coach in your pocket',
+    description: 'Premium members can ask the AI coach for exercise swaps, warm-ups and full workout plans.',
+    icon: 'tabler:message-chatbot',
   },
   {
-    title: 'How does Workout Quest support community and social features?',
-    description:
-      'Connect with friends, share achievements, and challenge each other in quests to build accountability through shared wins inside a welcoming fitness community.',
-    icon: 'tabler:users',
+    title: 'Collect heroes & gear',
+    description: 'Unlock avatars, pets, backgrounds and trading cards as you train.',
+    icon: 'tabler:diamond',
+  },
+  {
+    title: 'Watch your strength climb',
+    description: 'Charts, streaks and estimated one-rep maxes show how far you have come.',
+    icon: 'tabler:chart-line',
+  },
+  {
+    title: 'Ready-made routines',
+    description: 'Start from a prebuilt routine or build your own from a library of exercises with GIF demos.',
+    icon: 'tabler:list-check',
   },
 ];
 
-const blogHighlights = [
+const showcases = [
+  {
+    tagline: 'Your hero',
+    title: 'Your profile is your character sheet',
+    body: 'Every muscle group has its own level. Train it and watch the bar fill, claim a daily chest, and keep your streak alive.',
+    points: [
+      'Muscle levels that grow with your training',
+      'Daily chests, coins and collectible cards',
+      'Achievements for every milestone',
+    ],
+    image: profileCapture,
+    alt: 'Workout Quest profile showing the hero, daily chest, level and muscle stats',
+  },
+  {
+    tagline: 'Built for the gym floor',
+    title: 'Logging that keeps up with you',
+    body: 'Your last session fills in the targets, the rest timer runs between sets, and a new personal best gets flagged the moment you hit it.',
+    points: ['Targets from your previous session', 'A rest timer between sets', 'Personal bests flagged as you lift'],
+    image: builderCapture,
+    alt: 'Workout Quest workout logger with sets, targets and a rest timer',
+  },
+];
+
+const stats = [
+  { title: 'Workouts completed', amount: '10,000+' },
+  { title: 'Active users', amount: '5,000+' },
+  { title: 'Achievements earned', amount: '2,400+' },
+  { title: 'Friends added', amount: '500+' },
+];
+
+const reads = [
   {
     title: 'Gamification moves bodies faster',
     description:
-      'Why leveling systems, quests, and rewards keep motivation high—plus how Workout Quest mirrors your real-world progress with XP, quests, and leaderboards.',
-    icon: 'tabler:help-hexagon',
-      callToAction: {
-      text: 'Read Gamification Guide',
-      href: getPermalink('the-ultimate-guide-to-gamifying-your-home-workouts', 'post'),
-      icon: 'tabler:arrow-right',
-      variant: 'link',
-    },
+      'Why levelling systems, quests and rewards keep motivation high, and how Workout Quest mirrors your real-world progress with XP, quests and leaderboards.',
+    href: getPermalink('the-ultimate-guide-to-gamifying-your-home-workouts', 'post'),
   },
-  {
-    title: 'Where fitness tech is going next',
-    description:
-      'A theorycrafting dive into the trends shaping fit-tech, AI coaches, and gamified experiences for 2025.',
-    icon: 'tabler:radar',
-    callToAction: {
-      text: 'Read Trends for 2025',
-      href: getPermalink('future-of-fitness-gamification-trends-2025', 'post'),
-      icon: 'tabler:arrow-right',
-      variant: 'link',
-    },
-  },
-];
-
-const quickReads = [
   {
     title: 'Turn recovery into a quest',
     description:
-      'Wearable readiness scores, sleep, and HRV turn rest days into data-driven quests that reward smart recovery alongside hard training.',
+      'Wearable readiness scores, sleep and HRV turn rest days into data-driven quests that reward smart recovery alongside hard training.',
     href: getPermalink('smart-recovery-quests-wearables', 'post'),
   },
   {
     title: 'Theorycrafting the future',
-    description:
-      'Future of Fitness Gamification Trends 2025 maps how AI, community quests, and exploratory features will keep the app one step ahead of the crowded tracker category.',
+    description: 'How AI coaches, community quests and gamified experiences are shaping the next wave of fitness tech.',
     href: getPermalink('future-of-fitness-gamification-trends-2025', 'post'),
   },
   {
     title: 'Questing for recovery',
     description:
-      'See how recovery quests, programming-friendly deloads, and smart scheduling keep consistency high without burning anybody out.',
+      'See how recovery quests, programming-friendly deloads and smart scheduling keep consistency high without burning anybody out.',
     href: getPermalink('questing-for-recovery', 'post'),
   },
 ];
 
-const heroPoster = heroPosterImage.src;
+const faqItems = [
+  {
+    title: 'How does Workout Quest work?',
+    description:
+      'Workout Quest gamifies your fitness and exercise experience by letting you track workouts through a massive exercise database, logging reps, sets, and weights, and rewarding XP, achievements, and insights as you train.',
+  },
+  {
+    title: 'What makes Workout Quest unique in tracking workouts?',
+    description:
+      'Workout Quest mixes AI-driven personalization, an extensive workout library, and a community layer that turns routine exercise into an engaging, motivational adventure with detailed analytics.',
+  },
+  {
+    title: 'Can Workout Quest help me create a personalized fitness plan?',
+    description:
+      'The premium tier uses AI to craft workout plans tailored to your fitness level, goals, and available equipment, so every session feels purposeful and on-track.',
+  },
+  {
+    title: 'How does the achievement system motivate Workout Quest users?',
+    description:
+      'Achievements, badges, and streaks celebrate every milestone, combining recognition with healthy competition inside the community so you keep showing up.',
+  },
+  {
+    title: 'Is Workout Quest suitable for beginners?',
+    description:
+      'With detailed GIF demonstrations, muscle-group filters, equipment tags, and helpful “hot” actions, beginners can explore workouts confidently before branching into more advanced routines.',
+  },
+  {
+    title: 'How does Workout Quest support community and social features?',
+    description:
+      'Connect with friends, share achievements, and challenge each other in quests to build accountability through shared wins inside a welcoming fitness community.',
+  },
+];
+
 const canonicalUrl = metadata.canonical;
-const profileScreenshotUrl = new URL(profileScreenshot.src, Astro.site).toString();
+const absolute = (src: string) => new URL(src, Astro.site).toString();
+const appIconUrl = absolute(appIcon.src);
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'MobileApplication',
@@ -128,14 +196,10 @@ const softwareSchema = {
     priceCurrency: 'USD',
     availability: 'https://schema.org/InStock',
   },
-  downloadUrl:
-    'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
-  screenshot: profileScreenshotUrl,
-  image: profileScreenshotUrl,
-  sameAs: [
-    'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
-    'https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
-  ],
+  downloadUrl: STORE_LINKS.ios,
+  screenshot: screenshots.map(({ src }) => absolute(src.src)),
+  image: appIconUrl,
+  sameAs: [STORE_LINKS.ios, STORE_LINKS.android],
 };
 
 const organizationSchema = {
@@ -143,7 +207,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'Workout Quest',
   url: canonicalUrl,
-  logo: profileScreenshotUrl,
+  logo: appIconUrl,
   sameAs: softwareSchema.sameAs,
 };
 
@@ -169,274 +233,255 @@ const faqSchema = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="relative bg-black h-screen">
-    <div class="absolute inset-0">
-      <div
-        class="absolute inset-0 bg-cover bg-center opacity-30 motion-reduce:block motion-safe:hidden"
-        style={`background-image:url('${heroPoster}')`}
-        aria-hidden="true"
-      />
-      <video
-        id="hero-video"
-        data-high-quality-src="/landing.mp4"
-        muted
-        loop
-        playsinline
-        preload="none"
-        poster={heroPoster}
-        class="absolute inset-0 w-full h-full object-cover opacity-40 motion-safe:block motion-reduce:hidden"
-        aria-hidden="true"
-      >
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <div class="relative z-10 flex items-center justify-center h-full">
-      <div class="text-center text-white max-w-md mx-auto">
-        <h1 class="text-5xl font-bold">Level Up Your Fitness Journey</h1>
-        <p class="mt-4 text-lg">
-          Track your workouts, level-up, and compete with friends for <strong>free</strong> in Workout Quest
-        </p>
-
-        <div class="mt-8 flex justify-center space-x-4">
-          <a
-            href="https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2"
-          >
-            <span>Android Play Store</span>
-            <icon name="tabler:download"></icon>
-          </a>
-
-          <a
-            href="https://apps.apple.com/au/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-6 py-3 bg-primary rounded-lg text-white flex items-center space-x-2"
-          >
-            <span>iOS App Store</span>
-            <icon name="tabler:download"></icon>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <Features
-    id="features"
-    tagline="Features"
-    title="Key Features of Workout Quest"
-    items={[
-      {
-        title: 'Extensive Workout Library',
-        description: 'Access a wide range of workouts, complete with clear GIF demonstrations for each exercise.',
-        icon: 'tabler:bookmarks',
-      },
-      {
-        title: 'AI-Powered Personalization',
-        description: 'Get customized workout plans tailored to your fitness history, goals and available equipment.',
-        icon: 'tabler:brain',
-      },
-      {
-        title: 'Connect and Compete',
-        description: 'Join your friends, share your progress, and take on challenges with friends.',
-        icon: 'tabler:users',
-      },
-      {
-        title: 'Quick and Easy Workout Tracking',
-        description:
-          'Track your progress efficiently with easy access to previous workouts and estimated 1 rep maxes on the fly.',
-        icon: 'tabler:chart-bar',
-      },
-      {
-        title: 'Achievement System',
-        description: 'Unlock rewards and celebrate milestones as you progress in your fitness journey.',
-        icon: 'tabler:medal',
-      },
-      {
-        title: 'Comprehensive Insights',
-        description: 'Stay on-top of your training by utilizing our graphs and streak calendar to track your progress.',
-        icon: 'tabler:database',
-      },
-    ]}
-  />
-
-  <Content
-    isReversed
-    tagline="Your Journey, Your Rules"
-    title="Revolutionize Your Workout Routine with Workout Quest"
-    image={{
-      src: '~/assets/images/ss-building.png',
-      alt: 'Workout Quest Home Workouts Screen',
-    }}
-    items={[
-      {
-        title: 'Adaptable Home & Gym Workouts',
-        description:
-          'A dynamic workout platform that adapts to your environment, whether you’re at home or in the gym, Workout Quest helps find and select the exercises that are right for you.',
-      },
-      {
-        title: 'Innovative AI-Driven Customization',
-        description:
-          'Our cutting-edge AI system creates personalized workout plans, considering your fitness level, goals, and available equipment, ensuring a tailored fitness experience.',
-      },
-      {
-        title: 'Community and Competition',
-        description:
-          'Engage with your friends, share achievements, and foster a competitive yet supportive environment to reach your goals.',
-      },
-    ]}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Empower Your Fitness Journey</h3>
-      Gamify your workouts with our unique blend of technology and community support. From home-based exercises to gym
-      routines, our app guides you every step of the way.
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <Stats
-    stats={[
-      { title: 'Workouts Completed', amount: '10,000+' },
-      { title: 'Active Users', amount: '5000+' },
-      { title: 'Achievements Earned', amount: '2,400+' },
-      { title: 'Friends Added', amount: '500+' },
-    ]}
-  />
-
-  <section class="bg-slate-50 dark:bg-slate-900">
-    <div class="max-w-5xl mx-auto px-6 py-12">
-      <div class="text-center">
-        <p class="text-sm font-semibold uppercase tracking-wider text-primary">Deep dives</p>
-        <h2 class="mt-3 text-3xl font-bold text-black dark:text-white">Anchor your journey in the logbook</h2>
-        <p class="mt-2 text-lg text-muted dark:text-slate-300">
-          Dive into the thinking that powers Workout Quest: why quests keep motivation high, where the product is headed, and how
-          recovery rituals keep every quest sustainable.
-        </p>
-      </div>
-      <div class="mt-8 grid gap-6 md:grid-cols-3">
-        {quickReads.map((link) => (
-          <a
-            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left transition hover:border-primary dark:border-slate-700 dark:bg-slate-800"
-            href={link.href}
-          >
-            <h3 class="text-xl font-semibold text-black dark:text-white group-hover:text-primary">{link.title}</h3>
-            <p class="mt-2 text-sm text-muted dark:text-slate-300">{link.description}</p>
-            <span class="mt-4 inline-flex text-sm font-semibold text-primary">Read article →</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <Content
-    id="insights"
-    tagline="Notes from the lab"
-    title="Theorycrafting the Gamified Training Loop"
-    image={{
-      src: '~/assets/images/ss-profile.png',
-      alt: 'Workout Quest insight dashboard preview',
-    }}
-    items={blogHighlights}
-    columns={2}
-  >
-    <Fragment slot="content">
-      <p class="text-lg text-muted dark:text-slate-300">
-        We double-click on the articles powering Workout Quest to share why gamification works, the metrics we chase, and the upcoming
-        features that will keep every quest fresh.
+  <!-- Hero: the store poster art, with the title in the open centre on wide screens. -->
+  <section class="relative overflow-hidden border-b-2 border-ink bg-brand">
+    <Image
+      src={heroArt}
+      alt=""
+      widths={[1024, 1600, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 h-full w-full object-cover object-center"
+    />
+    <div
+      class="relative mx-auto flex max-w-xl flex-col items-center px-5 pb-6 pt-12 text-center lg:min-h-[min(50vw,840px)] lg:max-w-[36vw] lg:justify-center lg:py-12 xl:max-w-[34vw]"
+    >
+      <h1 class="comic-title text-[3.4rem] leading-[0.95] sm:text-7xl lg:text-[clamp(3.5rem,6vw,6.5rem)]">
+        Workout <span class="hl">Quest</span>
+      </h1>
+      <p class="mt-5 rounded-full bg-navy px-6 py-2.5 font-heading text-lg font-bold text-white sm:text-xl">
+        Level up every workout
       </p>
-    </Fragment>
-  </Content>
+      <p class="comic-card mt-5 px-5 py-4 text-base font-medium shadow-comic sm:text-lg">
+        The gamified workout tracker: log your sets, earn XP and loot, and race friends up the leaderboard. Free to
+        start on iOS and Android.
+      </p>
+      <StoreBadges class="mt-6" />
+    </div>
+    <Image
+      src={heroArt}
+      alt="Workout Quest heroes flexing and giving a thumbs up"
+      widths={[768, 1280]}
+      sizes="100vw"
+      class="relative block aspect-[2/1] w-full object-cover lg:hidden"
+    />
+  </section>
 
-  <FAQs id="faqs" tagline="FAQs" title="Frequently Asked Questions" items={faqItems} columns={2} />
-
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Join On Android',
-        href: 'https://play.google.com/store/apps/details?id=fitness.tracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-      {
-        variant: 'primary',
-        text: 'Join On iOS',
-        href: 'https://apps.apple.com/us/app/workout-quest-fitness-tracker/id6452191825?ign-itscg=30200&ign-itsct=apps_box_badge',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-    ]}
-  >
-    <Fragment slot="title">
-      Join the <span class="sm:whitespace-nowrap">Fitness Revolution</span>
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      Don't just work out, embark on a quest! Transform your workouts into a thrilling journey with Workout Quest, the gamified
-      workout tracker.
-    </Fragment>
-  </CallToAction>
-
-  <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
-  <script type="module">
-    if (typeof window !== 'undefined') {
-      const heroVideo = document.getElementById('hero-video');
-      const highQualitySrc = heroVideo?.dataset?.highQualitySrc;
-
-      if (heroVideo) {
-        const loadVideoSources = () => {
-          // Add video sources after page is interactive
-          const webmSource = document.createElement('source');
-          webmSource.src = '/landing.webm';
-          webmSource.type = 'video/webm';
-          heroVideo.appendChild(webmSource);
-
-          const mp4Source = document.createElement('source');
-          mp4Source.src = '/landing.mp4';
-          mp4Source.type = 'video/mp4';
-          heroVideo.appendChild(mp4Source);
-
-          // Enable autoplay and play
-          heroVideo.autoplay = true;
-          heroVideo.play().catch(() => {
-            console.log('Video autoplay unavailable');
-          });
-
-          // Later, swap to HD if available (low priority)
-          if (highQualitySrc) {
-            const swapToHighQuality = () => {
-              if (mp4Source && mp4Source.src !== highQualitySrc) {
-                const currentTime = heroVideo.currentTime;
-                mp4Source.src = highQualitySrc;
-                heroVideo.load();
-                heroVideo.currentTime = currentTime;
-              }
-            };
-
-            // Use requestIdleCallback if available, otherwise wait 3 seconds
-            if ('requestIdleCallback' in window) {
-              requestIdleCallback(() => swapToHighQuality());
-            } else {
-              setTimeout(swapToHighQuality, 3000);
-            }
-          }
-        };
-
-        // Load video after page becomes interactive
-        if (document.readyState === 'loading') {
-          window.addEventListener('load', loadVideoSources, { once: true });
-        } else {
-          loadVideoSources();
+  <!-- Screenshots: the store set, in store order. -->
+  <section id="screenshots" class="py-14 md:py-20" aria-labelledby="screenshots-title">
+    <div class="mx-auto max-w-7xl px-4 text-center md:px-6">
+      <p class="font-bold uppercase tracking-wide text-primary">Inside the app</p>
+      <h2 id="screenshots-title" class="mt-1 font-heading text-4xl font-black md:text-5xl">
+        Your training, turned into a game
+      </h2>
+    </div>
+    <div
+      id="screenshot-carousel"
+      class="mt-10 snap-x snap-mandatory overflow-x-auto pb-6 [scrollbar-width:none] md:snap-none [&::-webkit-scrollbar]:hidden"
+    >
+      <ul class="mx-auto flex w-max gap-5 px-4 md:px-6" aria-label="App screenshots">
+        {
+          screenshots.map(({ src, alt }, i) => (
+            <li class="shrink-0 snap-center">
+              <Image
+                src={src}
+                alt={alt}
+                widths={[250, 500]}
+                sizes="(min-width: 768px) 250px, 210px"
+                class:list={[
+                  'w-[210px] rounded-card border-2 border-ink shadow-comic md:w-[250px]',
+                  i % 2 ? 'mt-6' : '',
+                ]}
+              />
+            </li>
+          ))
         }
+      </ul>
+    </div>
+    <script>
+      // Start the row scrolled to its middle so the screenshots sit centred, spilling evenly off both edges.
+      const carousel = document.getElementById('screenshot-carousel');
+      if (carousel) carousel.scrollLeft = (carousel.scrollWidth - carousel.clientWidth) / 2;
+    </script>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="border-y-2 border-ink bg-face py-14 md:py-20" aria-labelledby="features-title">
+    <div class="mx-auto max-w-7xl px-4 md:px-6">
+      <div class="text-center">
+        <p class="font-bold uppercase tracking-wide text-primary">Features</p>
+        <h2 id="features-title" class="mt-1 font-heading text-4xl font-black md:text-5xl">Everything earns XP</h2>
+      </div>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          features.map(({ title, description, icon }) => (
+            <li class="comic-card bg-page p-6 shadow-comic">
+              <span class="flex h-12 w-12 items-center justify-center rounded-control border-2 border-navy bg-highlight text-navy shadow-comic-sm">
+                <Icon name={icon} class="h-7 w-7" />
+              </span>
+              <h3 class="mt-4 font-heading text-xl font-extrabold">{title}</h3>
+              <p class="mt-2 text-muted">{description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Showcases: real app captures in a comic phone frame. -->
+  {
+    showcases.map(({ tagline, title, body, points, image, alt }, i) => (
+      <section class="overflow-hidden py-14 md:py-20">
+        <div
+          class:list={[
+            'mx-auto flex max-w-6xl flex-col items-center gap-12 px-4 md:px-6 lg:flex-row lg:gap-20',
+            { 'lg:flex-row-reverse': i % 2 },
+          ]}
+        >
+          <div class="relative flex w-full justify-center lg:w-5/12">
+            <div
+              class:list={[
+                'absolute inset-x-0 top-1/2 h-48 -translate-y-1/2 border-y-2 border-ink bg-band',
+                i % 2 ? 'rotate-6' : '-rotate-6',
+              ]}
+              aria-hidden="true"
+            >
+              <div class="halftone h-full w-full text-navy/30 dark:text-white/25" />
+            </div>
+            <Image
+              src={image}
+              alt={alt}
+              widths={[300, 600]}
+              sizes="300px"
+              class:list={[
+                'relative w-[260px] rounded-[30px] border-[3px] border-ink shadow-comic-lg sm:w-[300px]',
+                i % 2 ? 'rotate-2' : '-rotate-2',
+              ]}
+            />
+          </div>
+          <div class="w-full lg:w-7/12">
+            <p class="font-bold uppercase tracking-wide text-primary">{tagline}</p>
+            <h2 class="mt-1 font-heading text-4xl font-black md:text-5xl">{title}</h2>
+            <p class="mt-4 text-lg text-muted">{body}</p>
+            <ul class="mt-6 space-y-3">
+              {points.map((point) => (
+                <li class="flex items-center gap-3 font-semibold">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-navy bg-highlight text-navy">
+                    <Icon name="tabler:check" class="h-4 w-4" />
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Stats -->
+  <section class="relative overflow-hidden border-y-2 border-ink bg-poster py-12" aria-label="Workout Quest in numbers">
+    <div class="halftone absolute inset-0 text-white/10" aria-hidden="true"></div>
+    <dl class="relative mx-auto grid max-w-6xl grid-cols-2 gap-8 px-4 text-center md:grid-cols-4 md:px-6">
+      {
+        stats.map(({ title, amount }) => (
+          <div class="flex flex-col-reverse">
+            <dt class="mt-2 font-bold uppercase tracking-wide text-white">{title}</dt>
+            <dd class="comic-title text-4xl lg:text-6xl">{amount}</dd>
+          </div>
+        ))
       }
-    }
-  </script>
+    </dl>
+  </section>
+
+  <!-- Deep dives -->
+  <section class="py-14 md:py-20" aria-labelledby="reads-title">
+    <div class="mx-auto max-w-7xl px-4 md:px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="font-bold uppercase tracking-wide text-primary">Deep dives</p>
+        <h2 id="reads-title" class="mt-1 font-heading text-4xl font-black md:text-5xl">From the logbook</h2>
+        <p class="mt-4 text-lg text-muted">
+          The thinking behind Workout Quest: why quests keep motivation high, where the product is headed, and how
+          recovery keeps every quest sustainable.
+        </p>
+      </div>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          reads.map(({ title, description, href }) => (
+            <li class="flex">
+              <a
+                class="comic-card group flex flex-col p-6 shadow-comic-sm transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-comic"
+                href={href}
+              >
+                <h3 class="font-heading text-xl font-extrabold">{title}</h3>
+                <p class="mt-2 flex-1 text-sm text-muted">{description}</p>
+                <span class="mt-4 inline-flex items-center gap-1 font-bold text-primary">
+                  Read article <Icon name="tabler:arrow-right" class="h-4 w-4" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section id="faqs" class="border-t-2 border-ink bg-face py-14 md:py-20" aria-labelledby="faqs-title">
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      <div class="text-center">
+        <p class="font-bold uppercase tracking-wide text-primary">FAQs</p>
+        <h2 id="faqs-title" class="mt-1 font-heading text-4xl font-black md:text-5xl">Frequently asked questions</h2>
+      </div>
+      <dl class="mt-10 grid gap-5 md:grid-cols-2">
+        {
+          faqItems.map(({ title, description }) => (
+            <div class="comic-card bg-page p-6">
+              <dt class="font-heading text-lg font-extrabold">{title}</dt>
+              <dd class="mt-2 text-muted">{description}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Call to action: a poster with the two mascots. -->
+  <section class="relative overflow-hidden border-t-2 border-ink bg-poster" aria-labelledby="cta-title">
+    <div
+      class="absolute left-[-10%] right-[-10%] top-1/2 h-56 -translate-y-1/2 -rotate-6 border-y-2 border-navy bg-band"
+      aria-hidden="true"
+    >
+      <div class="halftone h-full w-full text-navy/30 dark:text-white/25"></div>
+    </div>
+    <Image
+      src={heroFlex}
+      alt=""
+      widths={[320, 640]}
+      sizes="320px"
+      class="absolute bottom-0 left-[3%] hidden w-[300px] lg:block xl:left-[8%]"
+    />
+    <Image
+      src={heroThumbs}
+      alt=""
+      widths={[320, 640]}
+      sizes="320px"
+      class="absolute bottom-0 right-[3%] hidden w-[260px] lg:block xl:right-[8%]"
+    />
+    <div class="relative mx-auto flex max-w-xl flex-col items-center px-5 py-16 text-center md:py-20">
+      <h2 id="cta-title" class="comic-title text-5xl leading-none md:text-6xl">
+        Start your <span class="hl">quest</span>
+      </h2>
+      <p class="comic-card mt-6 px-5 py-4 text-lg font-medium shadow-comic">
+        Don't just work out, embark on a quest. Turn every session into XP, loot and bragging rights.
+      </p>
+      <StoreBadges class="mt-6" />
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 </Layout>

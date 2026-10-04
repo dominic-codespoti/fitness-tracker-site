@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { twMerge } from 'tailwind-merge';
+import appStoreBadge from '~/assets/images/app-store-badge.svg';
+import googlePlayBadge from '~/assets/images/google-play-badge.png';
+import { STORE_LINKS } from '~/utils/storeLinks';
+
+export interface Props {
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { size = 'md', class: className = '' } = Astro.props;
+const height = size === 'sm' ? 40 : 54;
+---
+
+<div class={twMerge('flex flex-wrap items-center justify-center gap-3', className)}>
+  <a
+    href={STORE_LINKS.ios}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="transition-transform hover:-translate-y-0.5"
+  >
+    <Image
+      src={appStoreBadge}
+      alt="Download on the App Store"
+      height={height}
+      width={Math.round((height * 119.66407) / 40)}
+      loading="eager"
+    />
+  </a>
+  <a
+    href={STORE_LINKS.android}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="transition-transform hover:-translate-y-0.5"
+  >
+    <Image
+      src={googlePlayBadge}
+      alt="Get it on Google Play"
+      height={height}
+      width={Math.round((height * 564) / 168)}
+      densities={[1, 2]}
+      loading="eager"
+    />
+  </a>
+</div>
