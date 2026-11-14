@@ -39,7 +39,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
       </nav>
     </div>
     <div class="flex flex-col items-center gap-3 md:items-end">
-      <StoreBadges size="sm" />
+      <StoreBadges size="sm" placement="footer" />
       <div class="flex items-center gap-3 text-sm text-muted">
         <Fragment set:html={footNote} />
         {

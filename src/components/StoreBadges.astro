@@ -8,17 +8,22 @@ import { STORE_LINKS } from '~/utils/storeLinks';
 export interface Props {
   size?: 'sm' | 'md';
   class?: string;
+  /** Where the badges sit, reported with each GA4 `store_click` (e.g. home-hero, blog-cta). */
+  placement: string;
 }
 
-const { size = 'md', class: className = '' } = Astro.props;
+const { size = 'md', class: className = '', placement } = Astro.props;
 const height = size === 'sm' ? 40 : 54;
 ---
 
-<div class={twMerge('flex flex-wrap items-center justify-center gap-3', className)}>
+<!-- App Store first; on a phone only the visitor's own store shows (html[data-platform], set by storeRouting) -->
+<div class={twMerge('store-badges flex flex-wrap items-center justify-center gap-3', className)}>
   <a
     href={STORE_LINKS.ios}
     target="_blank"
     rel="noopener noreferrer"
+    data-store="ios"
+    data-placement={placement}
     class="transition-transform hover:-translate-y-0.5"
   >
     <Image
@@ -33,6 +38,8 @@ const height = size === 'sm' ? 40 : 54;
     href={STORE_LINKS.android}
     target="_blank"
     rel="noopener noreferrer"
+    data-store="android"
+    data-placement={placement}
     class="transition-transform hover:-translate-y-0.5"
   >
     <Image
@@ -45,3 +52,15 @@ const height = size === 'sm' ? 40 : 54;
     />
   </a>
 </div>
+
+<style is:global>
+  html[data-platform='ios'] .store-badges [data-store='android'],
+  html[data-platform='android'] .store-badges [data-store='ios'] {
+    display: none;
+  }
+</style>
+
+<script>
+  import { initStoreRouting } from '~/utils/storeRouting';
+  initStoreRouting();
+</script>

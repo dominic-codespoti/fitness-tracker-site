@@ -39,6 +39,12 @@
 - Shared page shell: `src/layouts/PageLayout.astro` -> `src/layouts/Layout.astro`
 - Header/footer nav links: `src/navigation.js`
 - Blog routing and pagination: `src/utils/blog.ts` plus `src/pages/[...blog]/...`
+- **Store links are iPhone-first.** On iOS, users convert 3–5× better than on Android (RevenueCat, Nov 2026).
+  - URLs live in `src/utils/storeLinks.ts`.
+  - `StoreBadges.astro` takes a required `placement` and shows only the visitor's own store on phones.
+  - The mobile header's "Get the app" button (`data-store-auto`) points at Play on Android and at the App Store everywhere else.
+  - `src/utils/storeRouting.ts` sends a GA4 `store_click` event (store, placement, platform) for every store link.
+  - `CommonMeta.astro` carries Apple's Smart App Banner (`apple-itunes-app`, id 6452191825).
 
 ## Style Constraints Worth Remembering
 - Formatting is Prettier with `singleQuote: true`, semicolons, and `printWidth: 120` (`.prettierrc.js`).
